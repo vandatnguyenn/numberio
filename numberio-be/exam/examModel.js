@@ -10,6 +10,9 @@ const ExamSchema = new Schema({
       type: String,
     },
   ],
+  difficulty: {
+    type: int,
+  },
   createAt: {
     type: Date,
     default: Date.now(),
@@ -19,5 +22,5 @@ const ExamSchema = new Schema({
   },
 });
 
-const AccountModel = mongoose.model("account", AccountSchema);
-module.exports = AccountModel;
+const ExamModel = mongoose.model("exam", ExamSchema);
+module.exports = ExamModel;

@@ -15,6 +15,9 @@ const QuestionSchema = new Schema({
       type: String,
     },
   ],
+  difficulty: {
+    type: int,
+  },
   createAt: {
     type: Date,
     default: Date.now(),
