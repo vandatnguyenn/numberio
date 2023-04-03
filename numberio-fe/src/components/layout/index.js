@@ -1,3 +1,3 @@
 import ProtectedLayout from "./ProtectedLayout";
-
-export { ProtectedLayout };
+import AuthLayout from "./AuthLayout";
+export { ProtectedLayout, AuthLayout };
