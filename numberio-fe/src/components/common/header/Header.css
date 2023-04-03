@@ -1,0 +1,43 @@
+
+
+.header-left{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.header-logo{
+    height: 80%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+.header-logo .logo{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.header-right .header-menu{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.header-menu .header-menu-item{
+    height: 3rem;
+    width: 9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff6609;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    margin: 0 1rem;
+    border-radius: 0.3rem;
+}
+.header-menu .header-menu-item:hover{
+    background-color: #ff7f33;    
+}
