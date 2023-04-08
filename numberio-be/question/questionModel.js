@@ -16,7 +16,7 @@ const QuestionSchema = new Schema({
     },
   ],
   difficulty: {
-    type: int,
+    type: Number,
   },
   createAt: {
     type: Date,
@@ -24,6 +24,7 @@ const QuestionSchema = new Schema({
   },
   deleted: {
     type: Boolean,
+    default: false,
   },
 });
 
