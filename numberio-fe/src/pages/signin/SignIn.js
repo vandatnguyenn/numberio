@@ -49,6 +49,22 @@ const SignIn = () => {
       >
         <Grid
           item
+          xs="0"
+          sm={7}
+          md={8}
+          lg={8}
+          sx={{
+            width: "100%",
+            height: "85vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Banner />
+        </Grid>
+        <Grid
+          item
           xs={12}
           sm={5}
           md={4}
@@ -85,7 +101,9 @@ const SignIn = () => {
                 height: "3rem",
                 width: "90%",
                 color: "white",
-                margin: "10px 0 10px 0",              }}
+                margin: "10px 0 10px 0",
+                backgroundColor: "#db3236",
+               }}
               onClick={() => handleLogin()}
             
               startIcon={<Google />}
@@ -102,6 +120,7 @@ const SignIn = () => {
                 width: "90%",
                 color: "white",
                 margin: "10px 0 10px 0",
+                backgroundColor: "#3b5998",
               }}
               onClick={() => handleLogin()}
               startIcon={<Facebook />}
@@ -110,22 +129,6 @@ const SignIn = () => {
             </Button>
 
           </div>
-        </Grid>
-        <Grid
-          item
-          xs="0"
-          sm={7}
-          md={8}
-          lg={8}
-          sx={{
-            width: "100%",
-            height: "85vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Banner />
         </Grid>
       </Grid>
   );

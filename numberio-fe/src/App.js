@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { NotFound, SignIn } from "./pages";
+import { NotFound, SignIn, LearningPage } from "./pages";
 import { ProtectedLayout, AuthLayout } from "./components/layout";
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
       <Route element={<ProtectedLayout />}>
         <Route path="/" element={<>Home</>} />
         <Route path="dashboard" element={<h1>Dashboard</h1>} />
+        <Route path="learning" element={<LearningPage/>} />
         <Route path="auth" element={<AuthLayout/>} >
           <Route path="login" element={<SignIn />} />
           <Route path="register" element={<>signup</>} />

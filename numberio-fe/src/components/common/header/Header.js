@@ -33,11 +33,13 @@ function Header(props) {
   const { user, setUser } = props;
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  
   const navbarItems = [
     {
       name: "Trang chủ",
-      link: "/home",
+      link: "/dashboard",
       icon: <Home />,
     },
     {
@@ -67,22 +69,23 @@ function Header(props) {
         link: "/user/profile",
       },
       {
-        name: "Đôi mật khẩu",
-        link: "/user/changepassword",
+        name: "Cài đặt",
+        link: "/user/setting",
       },
+
       {
         name: "Đăng xuất",
         link: "/auth/login",
       },
     ],
   };
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  
 
   return (
     <Container
       maxWidth="xl"
       sx={{
-        backgroundColor: "#026597",
+        backgroundColor: "#36aedc",
         color: "white",
         padding: "0px",
         height: "15vh",
@@ -121,7 +124,7 @@ function Header(props) {
               anchor="right"
               sx={{
                 "& .MuiDrawer-paper": {
-                  backgroundColor: "#4486F4",
+                  backgroundColor: "#3cc2f5",
                   color: "white",
                 },
 
@@ -166,7 +169,7 @@ function Header(props) {
               {user && (
                 <Accordion
                   sx={{
-                    backgroundColor: "#4486F4",
+                    backgroundColor: "#3cc2f5",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "flex-start",
