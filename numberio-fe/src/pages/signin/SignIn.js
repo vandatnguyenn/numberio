@@ -1,35 +1,24 @@
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { AccountCircle, CheckBox, Lock } from "@mui/icons-material";
+
 import {
   Button,
-  FormControlLabel,
+  Divider,
   Grid,
-  InputAdornment,
-  TextField,
+  Typography,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import Banner from "../../components/Banner";
-
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#ff6609",
-    },
-  },
-});
+import { useEffect } from "react";
+import { Facebook, Google } from "@mui/icons-material";
 
 const SignIn = () => {
   const navigate = useNavigate();
   //eslint-disable-next-line
   const { user, setUser } = useOutletContext();
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
-
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
   const handleLogin = (data) => {
     //fecth api
     const tenplateUser={
@@ -51,7 +40,6 @@ const SignIn = () => {
     navigate("/dashboard");
   };
   return (
-    <ThemeProvider theme={theme}>
       <Grid
         container
         style={{
@@ -72,8 +60,7 @@ const SignIn = () => {
             padding: "10px 10px 10px 10px",
           }}
         >
-          <form
-            onSubmit={handleSubmit((data) => handleLogin(data))}
+          <div
             style={{
               display: "flex",
               flexDirection: "column",
@@ -85,119 +72,44 @@ const SignIn = () => {
               borderRadius: "5px",
             }}
           >
-            <h1>Đăng Nhập</h1>
-            <div>
-              <p>
-                Chưa có tài khoản? <Link to="/auth/register">Đăng ký</Link>
-              </p>
-            </div>
-            <Controller
-              name="username"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: {
-                  value: true,
-                  message: "Tên đăng nhập là bắt buộc",
-                },
-                pattern: {
-                  value: /^[a-zA-Z0-9]+$/,
-                  message: "Tên đăng nhập không được chứa ký tự đặc biệt",
-                },
-              }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Nhập tên đăng nhập"
-                  variant="outlined"
-                  margin="normal"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    ),
-                  }}
-                  fullWidth
-                  error={Boolean(errors?.username)}
-                  helperText={errors?.username?.message}
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: {
-                  value: true,
-                  message: "Mật khẩu là bắt buộc",
-                },
-                minLength: {
-                  value: 6,
-                  message: "Mật khẩu phải có ít nhất 6 ký tự",
-                },
-              }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Nhập mật khẩu"
-                  variant="outlined"
-                  type="password"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Lock />
-                      </InputAdornment>
-                    ),
-                  }}
-                  margin="normal"
-                  fullWidth
-                  error={Boolean(errors?.password)}
-                  helperText={
-                    errors?.password?.message || (
-                      <span style={{ color: "red" }}>
-                        {errors?.all?.message}
-                      </span>
-                    )
-                  }
-                />
-              )}
-            />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Controller
-                name="remember"
-                control={control}
-                defaultValue={false}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={<CheckBox color="primary" {...field} />}
-                    label="Ghi nhớ tài khoản"
-                  />
-                )}
-              />
-              <Link to={"/forgot-password"}>Quên mật khẩu?</Link>
-            </div>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{
-                height: "3rem",
-                width: "9rem",
-                marginTop: "10px",
-                color: "white",
-              }}
-            >
+            <Typography variant="h4" color="text.primary" align="center" >
               Đăng nhập
+            </Typography>
+            <Typography variant="body2" color="text.secondary" align="center">
+              Sử dụng tài khoản Google hoặc Facebook để đăng nhập
+            </Typography>
+            <Divider sx={{ width: "100%", margin: "10px 0 10px 0" }} />
+            <Button
+              variant="contained"
+              sx={{
+                height: "3rem",
+                width: "90%",
+                color: "white",
+                margin: "10px 0 10px 0",              }}
+              onClick={() => handleLogin()}
+            
+              startIcon={<Google />}
+            >
+              Đăng nhập bằng Google
             </Button>
-          </form>
+            <Typography variant="body2" color="text.secondary" align="center">
+              Hoặc
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{
+                height: "3rem",
+                width: "90%",
+                color: "white",
+                margin: "10px 0 10px 0",
+              }}
+              onClick={() => handleLogin()}
+              startIcon={<Facebook />}
+            >
+              Đăng nhập bằng Facebook
+            </Button>
+
+          </div>
         </Grid>
         <Grid
           item
@@ -216,7 +128,6 @@ const SignIn = () => {
           <Banner />
         </Grid>
       </Grid>
-    </ThemeProvider>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { NotFound, SignIn } from "./pages";
 import { ProtectedLayout, AuthLayout } from "./components/layout";
 
