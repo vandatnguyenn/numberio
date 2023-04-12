@@ -5,20 +5,59 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { ThreeDots, ColorRing } from 'react-loader-spinner';
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Banner from "../../components/Banner";
 import { useEffect } from "react";
 import { Facebook, Google } from "@mui/icons-material";
+import { useMutation } from '@tanstack/react-query';
 
-const SignIn = () => {
+import {signinWithGoogle} from '../../api';
+
+
+const SignIn = (props) => {
   const navigate = useNavigate();
   //eslint-disable-next-line
   const { user, setUser } = useOutletContext();
+  const {mutateAsync: googleAsync, isLoading: googleIsLoading} = useMutation(signinWithGoogle);
   useEffect(() => {
-    if (user) {
-      navigate("/dashboard");
+    async function handleGoogle(response) {
+      const credential = response.credential;      
+      const result = await googleAsync({credential: credential});
+      //do something with result 
+      const tenplateUser={
+        "id": 1,
+        "username": "admin",
+        "password": "admin",
+        "firstName": "Nguyễn Văn",
+        "lastName": "Đạt",
+        "email": "sanpleemail@gmail.com",
+        "phone": "0123456789",
+        "address": "Hà Nội",
+        "role": "ROLE_ADMIN",
+        "status": "ACTIVE",
+        "avatar": "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
+        "createdAt": "2021-09-01T07:00:00.000+00:00",
+        "updatedAt": "2021-09-01T07:00:00.000+00:00"
     }
-  }, [user, navigate]);
+    setUser(tenplateUser);    
+      navigate("/dashboard");            
+    }
+    /* global google */
+      
+    google.accounts.id.initialize({
+      client_id: "671880914125-d98k469qf1dq1cvv69otuaga44i7o31f.apps.googleusercontent.com",
+      callback: handleGoogle,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "filled_black",
+      size: "large",
+      text: "sign_in_with",
+      shape: "rectangular",
+      width: 340,
+    });    
+  }, []);
   const handleLogin = (data) => {
     //fecth api
     const tenplateUser={
@@ -95,21 +134,9 @@ const SignIn = () => {
               Sử dụng tài khoản Google hoặc Facebook để đăng nhập
             </Typography>
             <Divider sx={{ width: "100%", margin: "10px 0 10px 0" }} />
-            <Button
-              variant="contained"
-              sx={{
-                height: "3rem",
-                width: "90%",
-                color: "white",
-                margin: "10px 0 10px 0",
-                backgroundColor: "#db3236",
-               }}
-              onClick={() => handleLogin()}
-            
-              startIcon={<Google />}
-            >
-              Đăng nhập bằng Google
-            </Button>
+            <div>
+            {googleIsLoading ? <ColorRing height={20} width={20} color="red" /> : <div id="signInDiv"></div>}
+            </div>
             <Typography variant="body2" color="text.secondary" align="center">
               Hoặc
             </Typography>
