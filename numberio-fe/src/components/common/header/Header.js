@@ -82,12 +82,12 @@ function Header(props) {
   
 
   return (
-    <Container
-      maxWidth="xl"
+    <Box
       sx={{
+        paddingLeft: 10,
+        paddingRight: 10,
         backgroundColor: "#36aedc",
         color: "white",
-        padding: "0px",
         height: "15vh",
         display: "flex",
         alignItems: "center",
@@ -334,7 +334,7 @@ function Header(props) {
           </Box>
         )}
       </Box>
-    </Container>
+    </Box>
   );
 }
 
