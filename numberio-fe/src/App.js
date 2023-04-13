@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { NotFound, SignIn, LearningPage } from "./pages";
+import { NotFound, SignIn, LearningPage, AdminPage } from "./pages";
 import { ProtectedLayout, AuthLayout } from "./components/layout";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
           <Route path="register" element={<>signup</>} />
           <Route path="*" element={<NotFound />} />
         </Route>
-
+        <Route path="adminPage" element={<AdminPage/>} />
        
         <Route path="*" element={<NotFound />} />
       </Route>
