@@ -27,9 +27,11 @@ const AccountSchema = new Schema({
   },
   deleted: {
     type: Boolean,
+    default: false,
   },
   role: {
     type: String,
+    default: "user",
   },
 });
 

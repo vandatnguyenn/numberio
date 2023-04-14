@@ -1,13 +1,14 @@
 const express = require("express");
 const moongoose = require("mongoose");
-const port = 4000;
 const app = express();
-
+const accountRouter = require("./routes/accountRouter");
+const questionRoute = require("./routes/questionRouter");
+const signinRouter = require("./routes/signin.route");
 //connect database
 const connectDB = async () => {
   try {
     await moongoose.connect(
-      "mongodb+srv://shinobihao2001:4aqZ56MycMDOtk08@numberiobe.tfoooql.mongodb.net/?retryWrites=true&w=majority"
+      "mongodb+srv://shinobihao2001:4aqZ56MycMDOtk08@numberiobe.tfoooql.mongodb.net/?retryWrites=true&w=majority",
     );
     console.log("Connect DB successfully");
   } catch (error) {
@@ -16,6 +17,7 @@ const connectDB = async () => {
   }
 };
 connectDB();
+moongoose.set("strictQuery", false);
 ///////////////////////
 
 ///////
@@ -27,24 +29,19 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   // res.header("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
-
-const questionRoute = require("./question/questionRouter");
 app.use("/question", questionRoute);
-
-const signinRouter = require('./routes/signin.route');
 ///
-
+app.use("/signin", signinRouter);
+app.use("/account", accountRouter);
 app.get("/", (req, res) => {
   res.send("Hello world 22");
 });
-
-app.use("/signin", signinRouter);
-
+const port = 4000;
 app.listen(process.env.PORT || port, () => {
   console.log(
     `Numberio is runing on  http://localhost:${process.env.PORT || port}`

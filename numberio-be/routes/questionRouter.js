@@ -1,5 +1,5 @@
 const express = require("express");
-const questionController = require("./questionController.js");
+const questionController = require("../controllers/questionController");
 const router = express.Router();
 
 router.post("/addQuestion", questionController.addQuestion);

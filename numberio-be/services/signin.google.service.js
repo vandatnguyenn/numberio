@@ -1,5 +1,5 @@
 var crypto = require("crypto");
-const User = require("../account/accountModel");
+const User = require("../models/accountModel");
 const { OAuth2Client } = require("google-auth-library");
 const jwt = require("jsonwebtoken");
 
