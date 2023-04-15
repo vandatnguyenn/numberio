@@ -69,12 +69,32 @@ const accountController = {
   },
   getUser: async (req, res) => {
     try {
-      let user = await AccountModel.findById(req.user.id).select("-password");
+      let user = await AccountModel.findById(req.params.id).select("-password");
       if (!user) res.status(400).json({ message: "user is not exist" });
       res.json(user);
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
+  },
+  updateUser: async (req, res) => {
+    try {
+      let { email, avatar, firstname, lastname } = req.body;
+      let user = await AccountModel.findByIdAndUpdate(req.params.id, {email, avatar, firstname, lastname});
+      if (!user) res.status(400).json({ message: "user is not exist" });
+      return res.status(200).json({ message: "updated user" });
+    } catch (error) {
+      
+    }
+  },
+  delUser: async (req, res) => {
+    try {
+      let user = await AccountModel.findByIdAndDelete(req.params.id);
+      if (!user) res.status(400).json({ message: "user is not exist" });
+      return res.status(200).json({ message: "deleted user" });
+    } catch (error) {
+       return res.status(500).json({ message: error.message });
+    }
+      
   },
   refeshToken: (req, res) => {
     try {

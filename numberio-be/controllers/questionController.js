@@ -22,7 +22,31 @@ exports.addQuestion = async (req, res) => {
     });
   }
 };
-
+exports.updateQuestion = (req, res) => {
+  try {
+    const { id, description, answers, wrongAnswers, difficulty } = req.body;
+    const question = Questions.findByIdAndUpdate(id, {
+      description,
+      answers,
+      wrongAnswers,
+      difficulty,
+    });
+    if (!question)
+      return res.status(400).json({ message: "question is not exist" });
+    return res.status(200).json({ message: "updated question" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.delQuestion = async (req, res) => {
+  try {
+    let question = await Questions.findByIdAndDelete(req.params.id);
+    if (!question) res.status(400).json({ message: "question is not exist" });
+    return res.status(200).json({ message: "deleted question" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 exports.getQuestions = async (req, res) => {
   const { QuestionQuanity, Difficulty } = req.body;
   //console.log(Difficulty);

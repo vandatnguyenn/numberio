@@ -24,3 +24,5 @@ const studentExamSchema = new Schema({
 
 const studentExamModel = mongoose.model("studentExam", studentExamSchema);
 module.exports = studentExamModel;
+
+//examid đã lưu owner id là mã của user, lưu trg này là k cần thiết..mình bổ sung historyModel mn vô xem thử
