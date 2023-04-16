@@ -9,10 +9,7 @@ const ExamSchema = new Schema({
     type: String,
   },
   questions: {
-    type: Array //list câu hỏi dc láy tương ứng từ trường gameModel(độ khó, số lượng câu hỏi, đề tài)
-  },
-  difficulty: {
-    type: int,
+    type: Array, //list câu hỏi dc láy tương ứng từ trường gameModel(độ khó, số lượng câu hỏi, đề tài)
   },
   createAt: {
     type: Date,
@@ -20,6 +17,7 @@ const ExamSchema = new Schema({
   },
   deleted: {
     type: Boolean,
+    default: false,
   },
 });
 

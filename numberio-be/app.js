@@ -4,6 +4,8 @@ const app = express();
 const accountRouter = require("./routes/accountRouter");
 const questionRoute = require("./routes/questionRouter");
 const signinRouter = require("./routes/signin.route");
+const gameRouter = require("./routes/gameRouter");
+const examRouter = require("./routes/examRouter");
 //connect database
 const connectDB = async () => {
   try {
@@ -38,6 +40,8 @@ app.use("/question", questionRoute);
 ///
 app.use("/signin", signinRouter);
 app.use("/account", accountRouter);
+app.use("/game", gameRouter);
+app.use("/exam", examRouter);
 app.get("/", (req, res) => {
   res.send("Hello world 22");
 });

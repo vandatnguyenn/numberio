@@ -1,13 +1,14 @@
-const { model } = require("mongoose");
-
-const mongoose = reuqire("mongoose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const GameSchema = new Schema({
-  descriptionn: {
+  name: {
     type: String,
   },
-  typeofGame: {
+  description: {
+    type: String,
+  },
+  typeOfGame: {
     type: Number,
   },
   //   questionQuanity: {
@@ -22,6 +23,7 @@ const GameSchema = new Schema({
   },
   deleted: {
     type: Boolean,
+    default: false,
   },
 });
 
