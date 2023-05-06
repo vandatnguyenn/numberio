@@ -23,5 +23,5 @@ export const addQuestion = async (payload) => {
     }).catch((err) => {
         throw new Error(err.response.data.message);
     });
-    return result.data;
+    return result.data.message;
 }

@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import { TextField, Button, Container, Stack } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { Link } from "react-router-dom"
+import { addQuestion } from '../../api';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 const AddQuestion = (props) => {
     const [description, setDescription] = useState('');
@@ -9,6 +13,7 @@ const AddQuestion = (props) => {
     const [wrongAnswer1, setWrongAnswer1] = useState('');
     const [wrongAnswer2, setWrongAnswer2] = useState('');
     const [wrongAnswer3, setWrongAnswer3] = useState('');
+    const [difficulty, setDifficulty] = useState(1);
     
     const TrueAnswerCssTextField = styled(TextField)({
         '& label.Mui-focused': {
@@ -51,14 +56,25 @@ const AddQuestion = (props) => {
     });
  
     function handleSubmit(event) {
-        event.preventDefault();
-        const payload = {
-            description: description, 
-            trueAnswer: trueAnswer, 
-            wrongAnswer: [wrongAnswer1, wrongAnswer2, wrongAnswer3]
-        };
+      event.preventDefault();
+      const payload = {
+        Description: description, 
+        Answers: trueAnswer, 
+        WrongAnswers: [wrongAnswer1, wrongAnswer2, wrongAnswer3],
+        Difficulty: difficulty
+      };
+      try {
+        addQuestion(payload).then((res) => console.log(res));
         console.log(payload);
+      }catch(err) {
+        throw new Error(err);
+      }
+      
     }
+
+    const handleChange = (event) => {
+      setDifficulty(event.target.value);
+    };
     
     return (
         <div style={{
@@ -76,11 +92,24 @@ const AddQuestion = (props) => {
                     onSubmit={handleSubmit} 
                     sx={{mt: 4, mb: 4}}    
                 >
+                    <InputLabel id="demo-simple-select-label">Difficulty</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={difficulty}
+                      label="Difficulty"
+                      onChange={handleChange}
+                      sx={{width: "20%"}}
+                    >
+                      <MenuItem value={1}>One</MenuItem>
+                      <MenuItem value={2}>Two</MenuItem>
+                      <MenuItem value={3}>Three</MenuItem>
+                    </Select>
                     <div style={{display: "flex", justifyContent: "center"}}>
                         <TextField
                             id="outlined-multiline-static"
                             type="text"
-                            color='secondary'
+                            color='success'
                             label="Description"
                             onChange={e => setDescription(e.target.value)}
                             value={description}
@@ -93,20 +122,20 @@ const AddQuestion = (props) => {
                     </div>
                     <div>
                         <div style={{display: "flex", justifyContent: "center"}}>
-                            <TrueAnswerCssTextField
+                            <TextField
                                 type="text"
                                 variant='outlined'
-                                color='secondary'
+                                color='success'
                                 label="True answer"
                                 onChange={e => setTrueAnswer(e.target.value)}
                                 value={trueAnswer}
                                 required
                                 sx={{width: "39%", mr: 3}}
                             />
-                            <WrongAnswerCssTextField
+                            <TextField
                                 type="text"
                                 variant='outlined'
-                                color='secondary'
+                                color='warning'
                                 label="Wrong answer"
                                 onChange={e => setWrongAnswer1(e.target.value)}
                                 value={wrongAnswer1}
@@ -116,20 +145,20 @@ const AddQuestion = (props) => {
                         </div>
                         <br/>
                         <div style={{display: "flex", justifyContent: "center"}}>
-                            <WrongAnswerCssTextField
+                            <TextField
                                 type="text"
                                 variant='outlined'
-                                color='secondary'
+                                color='warning'
                                 label="Wrong answer"
                                 onChange={e => setWrongAnswer2(e.target.value)}
                                 value={wrongAnswer2}
                                 required
                                 sx={{width: "39%", mr: 3}}
                             />
-                            <WrongAnswerCssTextField
+                            <TextField
                                 type="text"
                                 variant='outlined'
-                                color='secondary'
+                                color='warning'
                                 label="Wrong answer"
                                 onChange={e => setWrongAnswer3(e.target.value)}
                                 value={wrongAnswer3}
