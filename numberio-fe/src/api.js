@@ -14,3 +14,14 @@ export const signinWithGoogle = async (payload) => {
     });
     return result.data;
 }
+
+export const addQuestion = async (payload) => {
+    const result = await api({
+        method: 'post',
+        url: '/question/addQuestion',
+        data: payload
+    }).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
+    return result.data.message;
+}
