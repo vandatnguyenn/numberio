@@ -8,7 +8,6 @@ import {
   IconButton,
   Drawer,
   Avatar,
-  Container,
   Box,
   Menu,
   Divider,
@@ -28,6 +27,7 @@ import {
   Logout as LogoutIcon,
   ExpandMore,
 } from "@mui/icons-material";
+import { ReactComponent as LogoNoBackground } from "../../../assets/logo/logo-no-background.svg";
 
 function Header(props) {
   const { user, setUser } = props;
@@ -35,7 +35,6 @@ function Header(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  
   const navbarItems = [
     {
       name: "Trang chủ",
@@ -79,28 +78,26 @@ function Header(props) {
       },
     ],
   };
-  
 
   return (
     <Box
+      backgroundColor="background.default"
       sx={{
-        paddingLeft: 10,
-        paddingRight: 10,
-        backgroundColor: "#36aedc",
-        color: "white",
-        height: "15vh",
+        padding: "0 2rem",
+        height: "100px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
       }}
     >
       <Box className="header-left">
-        <div className="header-logo">
-          <img
-            src="https://azco.vn/wp-content/uploads/2019/11/thumb-logo-la-gi.jpg"
-            className="logo"
-            alt="logo"
-          />
+        <div
+          className="header-logo"
+          onClick={() => {
+            navigate("/dashboard");
+          }}
+        >
+          <LogoNoBackground className="logo" />
         </div>
       </Box>
       <Box className="header-right">
@@ -245,13 +242,13 @@ function Header(props) {
                   margin: "0 0.5rem",
                   borderRadius: "0.3rem",
                   "&:hover": {
-                    backgroundColor: "#4486F4",
+                    backgroundColor: "#0080c6",
                   },
                   "&:active": {
-                    backgroundColor: "#4486F4",
+                    backgroundColor: "#0080c6",
                   },
                   "&:focus": {
-                    backgroundColor: "#4486F4",
+                    backgroundColor: "#0080c6",
                   },
                 }}
                 onClick={(event) => {
@@ -277,7 +274,7 @@ function Header(props) {
                     margin: "0 0.5rem",
                     borderRadius: "0.3rem",
                     "&:hover": {
-                      backgroundColor: "#4486F4",
+                      backgroundColor: "#0080c6",
                     },
                   }}
                   onClick={(event) => {
