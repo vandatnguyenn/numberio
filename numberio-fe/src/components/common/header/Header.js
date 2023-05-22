@@ -28,13 +28,16 @@ import {
   ExpandMore,
 } from "@mui/icons-material";
 import { ReactComponent as LogoNoBackground } from "../../../assets/logo/logo-no-background.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAuth } from "../../../redux/selector";
+import authSlice from "../../../redux/slice/authSlice";
 
-function Header(props) {
-  const { user, setUser } = props;
+function Header() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
+  const dispatch = useDispatch();
+  const auth = useSelector(selectAuth)
   const navbarItems = [
     {
       name: "Trang chủ",
@@ -57,10 +60,10 @@ function Header(props) {
       icon: <QuestionAnswer />,
     },
   ];
-  const userBox = {
-    name: `${user?.lastName}`,
+  const userButtonData = {
+    name: `${auth.user?.lastName}`,
     icon: (
-      <Avatar alt="avatar" sx={{ width: 25, height: 25 }} src={user?.avatar} />
+      <Avatar alt="avatar" sx={{ width: 25, height: 25 }} src={auth.user?.avatar} />
     ),
     options: [
       {
@@ -163,7 +166,7 @@ function Header(props) {
                   </div>
                 ))}
               </div>
-              {user && (
+              {auth.isLogin && (
                 <Accordion
                   sx={{
                     backgroundColor: "#3cc2f5",
@@ -184,7 +187,7 @@ function Header(props) {
                       paddingLeft: "8px",
                     }}
                   >
-                    {userBox.icon}
+                    {userButtonData.icon}
                     <Typography
                       sx={{
                         marginLeft: "5px",
@@ -192,11 +195,11 @@ function Header(props) {
                         textTransform: "uppercase",
                       }}
                     >
-                      {userBox.name}
+                      {userButtonData.name}
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    {userBox.options.map((option, index) => {
+                    {userButtonData.options.map((option, index) => {
                       return (
                         <div key={index}>
                           <Divider />
@@ -204,7 +207,7 @@ function Header(props) {
                             <MenuItem
                               key={index}
                               onClick={() => {
-                                setUser(null);
+                                dispatch(authSlice.actions.Logout());
                                 navigate(option.link);
                               }}
                             >
@@ -261,7 +264,7 @@ function Header(props) {
                 {item.name}
               </Button>
             ))}
-            {user && (
+            {auth.isLogin && (
               <div>
                 <Button
                   color="primary"
@@ -280,13 +283,13 @@ function Header(props) {
                   onClick={(event) => {
                     setAnchorEl(event.currentTarget);
                   }}
-                  startIcon={userBox.icon}
+                  startIcon={userButtonData.icon}
                   className="Header__right__item"
                 >
-                  {userBox.name}
+                  {userButtonData.name}
                 </Button>
                 <Menu
-                  id={userBox.name}
+                  id={userButtonData.name}
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
                   onClose={() => {
@@ -296,7 +299,7 @@ function Header(props) {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  {userBox.options.map((option, index) => {
+                  {userButtonData.options.map((option, index) => {
                     return option.name === "Đăng xuất" ? (
                       <div key={index}>
                         <Divider />
@@ -304,7 +307,7 @@ function Header(props) {
                           key={index}
                           onClick={() => {
                             setAnchorEl(null);
-                            setUser(null);
+                            dispatch(authSlice.actions.Logout());
                             navigate(option.link);
                           }}
                         >
