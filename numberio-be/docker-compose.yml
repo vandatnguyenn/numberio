@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nginx_load_balancer:
+    image: nginx
+    volumes:
+      - './nginx/default.conf:/etc/nginx/nginx.conf'
+    ports:
+      - '8080:80'
+  app1:
+    image: numberio-be
+    environment:
+      - PORT=3001
+      - MONGO_DB_URL=mongodb+srv://shinobihao2001:4aqZ56MycMDOtk08@numberiobe.tfoooql.mongodb.net/?retryWrites=true&w=majority
+  app2:
+    image: numberio-be
+    environment:
+      - PORT=3002
+      - MONGO_DB_URL=mongodb+srv://shinobihao2001:4aqZ56MycMDOtk08@numberiobe.tfoooql.mongodb.net/?retryWrites=true&w=majority
+  app3:
+    image: numberio-be
+    environment:
+      - PORT=3003
+      - MONGO_DB_URL=mongodb+srv://shinobihao2001:4aqZ56MycMDOtk08@numberiobe.tfoooql.mongodb.net/?retryWrites=true&w=majority
