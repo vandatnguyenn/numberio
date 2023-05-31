@@ -1,31 +1,42 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const GameSchema = new Schema({
   name: {
     type: String,
+    unique: true,
   },
   description: {
     type: String,
   },
-  typeOfGame: {
-    type: Number,
+  gameUrl: {
+    type: String,
   },
+  // typeOfGame: {
+  //   type: Number,
+  // },
   //   questionQuanity: {
   //     type: Number,
   //   },
-  gameURL: {
-    type: String,
-  },
   createAt: {
     type: Date,
     default: Date.now(),
   },
-  deleted: {
+  active: {
     type: Boolean,
     default: false,
   },
 });
 
-const GameModel = mongoose.model("game", GameSchema);
+GameSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    console.log(returnedObject._id);
+    returnedObject.id = returnedObject._id;
+
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+const GameModel = mongoose.model('Game', GameSchema);
 module.exports = GameModel;

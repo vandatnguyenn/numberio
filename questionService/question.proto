@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+message Question {
+    string id = 1;
+    string description = 2;
+    repeated string answers = 3;
+    int32 correctAnswer = 4;
+    int32 difficulty = 5;
+    string createAt = 6;
+    bool active = 7;
+    string explaination = 8;
+}
+
+message NewQuestion {
+    string description = 1;
+    repeated string answers = 2;
+    int32 correctAnswer = 3;
+    int32 difficulty = 4;
+    string explaination = 5;
+}
+
+service QuestionService {
+    rpc getAllQuestions (Empty) returns (QuestionList) {}
+    rpc createQuestion (NewQuestion) returns (Question) {}
+    rpc updateQuestion (Question) returns (Question) {}
+    rpc getQuestionPage (Page) returns (QuestionPage) {}
+    rpc getQuestionById (QuestionId) returns (Question) {}
+    rpc deleteQuestion (QuestionId) returns (Empty) {}
+    rpc randomQuestions (RandomQuestions) returns (QuestionList) {}
+}
+
+message Empty {}
+
+message RandomQuestions {
+    optional int32 total = 1;
+    optional int32 difficulty = 2;
+}
+
+message Page {
+    optional int32 page = 1;
+    optional int32 perpage = 2;
+    optional int32 difficulty = 3;
+    optional bool orderAsc = 4;
+}
+
+message QuestionId {
+    string id = 1;
+}
+
+message QuestionPage {
+    int32 totalCount = 1;
+    int32 page = 2;
+    int32 perpage = 3;
+    int32 pageCount = 4;
+    repeated Question questions = 5;
+}
+
+message QuestionList {
+   repeated Question questions = 1;
+}
+
