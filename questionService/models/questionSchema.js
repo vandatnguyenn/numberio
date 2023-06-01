@@ -7,16 +7,16 @@ const questionSchema = new mongoose.Schema({
   answers: [{ type: String }],
 
   // example [A,B,C,D], A correct => correctAnswer: 1
-  correctAnswers: {
+  correctAnswer: {
+    type: Number,
+  },
+
+  difficulty: {
     type: Number,
   },
   explaination: {
     type: String,
   },
-  difficulty: {
-    type: Number,
-  },
-
   createAt: {
     type: Date,
     default: Date.now(),
