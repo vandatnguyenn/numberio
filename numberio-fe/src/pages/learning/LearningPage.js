@@ -1,10 +1,11 @@
 import { ArrowForward } from "@mui/icons-material";
-import { Grid, Box, Pagination, Typography, Card, CardMedia, CardContent, Button, Container, CardActionArea } from "@mui/material";
+import { Grid, Box, Pagination, Typography, Card, CardMedia, CardContent, Button, Container, CardActionArea, Divider } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../../constant";
-import useLocalStorage from "../../hooks/useLocalStorage";
-const gamesData = [
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../redux/selector";
+const gamesDataTemplate = [
   {
     id: 1,
     name: "Game 1",
@@ -202,24 +203,25 @@ const typeGames = [
     name: "Khó",
   },
 ];
-const GAME_PER_PAGE = 3;
-const NUMBER_OF_PAGE = Math.ceil(gamesData.length / GAME_PER_PAGE);
+
 const LearningPage = () => {
   const [game, setGame] = useState(null);
   const [gamesData, setGamesData] = useState([]);
   const [page, setPage] = useState(1);
   const [typeGame, setTypeGame] = useState(1);
   const [postDataExam, setPostDataExam] = useState({});
-  const [user, setUser] = useLocalStorage("user_id", "");
+  const user = useSelector(selectAuth).user;
   const GAME_PER_PAGE = 3;
   const NUMBER_OF_PAGE = Math.ceil(gamesData.length / GAME_PER_PAGE);
   useEffect(() => {
-    let fecthGameData = async () => {
-      let data = await axios.get(`${BACKEND_URL}/game/all`);
-      console.log(data);
-      setGamesData(data.data);
-    };
-    fecthGameData();
+    // let fecthGameData = async () => {
+    //   let data = await axios.get(`${BACKEND_URL}/game/all`);
+    //   console.log(data);
+    //   setGamesData(data.data);
+    // };
+    // fecthGameData();
+
+    setGamesData(gamesDataTemplate);
   }, []);
   const handleStartGame = async () => {
     let postExam = {
@@ -233,7 +235,7 @@ const LearningPage = () => {
     window.open(link, "_blank"); //TODO: Hoặc sử dụng react-router-dom và iframe để hiển thị game
   };
   return (
-    <Grid container>
+    <Grid container sx={{flexGrow:1}}>
       <Grid item xs={8}>
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Typography variant="h5" component="div" sx={{ flexGrow: 1, mb: 4 }}>
@@ -302,6 +304,7 @@ const LearningPage = () => {
           </div>
         </Container>
       </Grid>
+      <Divider orientation="vertical" flexItem sx={{ mr: "-1px" }} height='100%' />
       <Grid
         item
         xs={4}
@@ -315,23 +318,20 @@ const LearningPage = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            border: 1,
             p: 1,
-            borderColor: "grey.500",
-            borderRadius: 1,
           }}>
-          <Typography variant="h5" component="div" sx={{ mt: 4, mb: 4 }}>
+          <Typography variant="h3" component="div" sx={{ mt: 4, mb: 4 }}>
             Thông tin trò chơi
           </Typography>
           {game && (
             <div>
-              <Typography variant="h6" component="div">
+              <Typography variant="h5" component="div">
                 Tên trò chơi: {game.name}
               </Typography>
               <Typography variant="h6" component="div">
                 Mô tả: {game.description}
               </Typography>
-
+              <Divider/>  
               <Box
                 sx={{
                   mt: 4,
@@ -340,17 +340,18 @@ const LearningPage = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}>
-                <Typography variant="h5" component="div">
+                <Typography variant="h6" component="div">
                   Chọn độ khó
                 </Typography>
                 {typeGames.map((type) => {
                   return (
                     <Button
                       variant="contained"
+                      key={type.id}
+                      color="info"
                       sx={{
+                        width: 200,
                         mt: 2,
-                        bgcolor:
-                          type.id === typeGame.id ? "primary.main" : "#3cc2f5",
                       }}
                       onClick={() => {
                         setTypeGame(type);
@@ -361,19 +362,14 @@ const LearningPage = () => {
                 })}
 
                 <Button
-                  variant="outlined"
+                  variant="contained"
+                  color="success"
                   sx={{
                     mt: 2,
-                    color: "#88cd42",
-                    borderColor: "#88cd42",
                     height: 50,
                     width: 200,
                     fontSize: 20,
-                    "&:hover": {
-                      backgroundColor: "#88cd42",
-                      borderColor: "#88cd42",
-                      color: "white",
-                    },
+                    color: 'white'
                   }}
                   endIcon={<ArrowForward />}
                   onClick={() => handleStartGame()}>

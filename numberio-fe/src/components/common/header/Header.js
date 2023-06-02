@@ -28,16 +28,16 @@ import {
   ExpandMore,
 } from "@mui/icons-material";
 import { ReactComponent as LogoNoBackground } from "../../../assets/logo/logo-no-background.svg";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectAuth } from "../../../redux/selector";
-import authSlice from "../../../redux/slice/authSlice";
+import { useAuth } from "../../../hooks/useAuth";
 
 function Header() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const dispatch = useDispatch();
   const auth = useSelector(selectAuth)
+  const { signOut } = useAuth();
   const navbarItems = [
     {
       name: "Trang chủ",
@@ -61,7 +61,7 @@ function Header() {
     },
   ];
   const userButtonData = {
-    name: `${auth.user?.lastName}`,
+    name: `${auth.user?.name}`,
     icon: (
       <Avatar alt="avatar" sx={{ width: 25, height: 25 }} src={auth.user?.avatar} />
     ),
@@ -77,9 +77,15 @@ function Header() {
 
       {
         name: "Đăng xuất",
-        link: "/auth/login",
+        link: "/",
+        function: () => {
+          handleLogout();
+        }
       },
     ],
+  };
+  const handleLogout = async () => {
+    await signOut();
   };
 
   return (
@@ -207,8 +213,7 @@ function Header() {
                             <MenuItem
                               key={index}
                               onClick={() => {
-                                dispatch(authSlice.actions.Logout());
-                                navigate(option.link);
+                                handleLogout();
                               }}
                             >
                               <LogoutIcon />
@@ -245,13 +250,16 @@ function Header() {
                   margin: "0 0.5rem",
                   borderRadius: "0.3rem",
                   "&:hover": {
-                    backgroundColor: "#0080c6",
+                    backgroundColor: "#ffffff",
+                    color: "#0080c6",
                   },
                   "&:active": {
-                    backgroundColor: "#0080c6",
+                    backgroundColor: "#ffffff",
+                    color: "#0080c6",
                   },
                   "&:focus": {
-                    backgroundColor: "#0080c6",
+                    backgroundColor: "#ffffff",
+                    color: "#0080c6",
                   },
                 }}
                 onClick={(event) => {
@@ -259,7 +267,7 @@ function Header() {
                   navigate(item.link);
                 }}
                 startIcon={item.icon}
-                variant="contained"
+                variant="text"
               >
                 {item.name}
               </Button>
@@ -307,8 +315,7 @@ function Header() {
                           key={index}
                           onClick={() => {
                             setAnchorEl(null);
-                            dispatch(authSlice.actions.Logout());
-                            navigate(option.link);
+                            handleLogout();
                           }}
                         >
                           <Button startIcon={<LogoutIcon />}>

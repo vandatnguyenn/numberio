@@ -8,19 +8,20 @@ import { Provider as ReduxProvider } from "react-redux";
 import { store } from "./redux/store";
 import theme from "./utils/theme";
 import App from "./App";
+import { AuthProvider } from "./hooks/useAuth";
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
     <ThemeProvider theme={theme}>
       <ReduxProvider store={store}>
         <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <App />
-          </QueryClientProvider>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <App />
+            </QueryClientProvider>
+          </AuthProvider>
         </BrowserRouter>
       </ReduxProvider>
     </ThemeProvider>
-  </React.StrictMode>
 );
