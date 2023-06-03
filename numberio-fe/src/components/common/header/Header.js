@@ -36,12 +36,12 @@ function Header() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const auth = useSelector(selectAuth)
+  const auth = useSelector(selectAuth);
   const { signOut } = useAuth();
   const navbarItems = [
     {
       name: "Trang chủ",
-      link: "/dashboard",
+      link: "/",
       icon: <Home />,
     },
     {
@@ -63,7 +63,11 @@ function Header() {
   const userButtonData = {
     name: `${auth.user?.name}`,
     icon: (
-      <Avatar alt="avatar" sx={{ width: 25, height: 25 }} src={auth.user?.avatar} />
+      <Avatar
+        alt="avatar"
+        sx={{ width: 25, height: 25 }}
+        src={auth.user?.avatar}
+      />
     ),
     options: [
       {
@@ -80,7 +84,7 @@ function Header() {
         link: "/",
         function: () => {
           handleLogout();
-        }
+        },
       },
     ],
   };
@@ -275,7 +279,6 @@ function Header() {
             {auth.isLogin && (
               <div>
                 <Button
-                  color="primary"
                   variant="contained"
                   sx={{
                     height: "3rem",
@@ -285,8 +288,10 @@ function Header() {
                     margin: "0 0.5rem",
                     borderRadius: "0.3rem",
                     "&:hover": {
-                      backgroundColor: "#0080c6",
+                      backgroundColor: "rgb(0, 255, 142)",
                     },
+                    background:
+                      "linear-gradient(90deg, rgba(25,82,215,1) 0%, rgba(31,13,221,1) 48%, rgba(39,17,143,1) 100%)",
                   }}
                   onClick={(event) => {
                     setAnchorEl(event.currentTarget);
@@ -294,7 +299,7 @@ function Header() {
                   startIcon={userButtonData.icon}
                   className="Header__right__item"
                 >
-                  {userButtonData.name}
+                  {userButtonData.name.slice(0, 7) + "..."}
                 </Button>
                 <Menu
                   id={userButtonData.name}

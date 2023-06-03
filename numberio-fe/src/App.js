@@ -1,13 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import { NotFound, LearningPage } from "./pages";
+import { NotFound, LearningPage, HomePage } from "./pages";
 import { ProtectedLayout } from "./components/layout";
 
 function App() {
   return (
     <Routes>
       <Route element={<ProtectedLayout />}>
-        <Route path="/" element={<>Home</>} />
-        <Route path="dashboard" element={<h1>Dashboard</h1>} />
+        <Route path="/" element={<HomePage/>} />
         <Route path="learning" element={<LearningPage/>} />
        
         <Route path="*" element={<NotFound />} />
