@@ -6,6 +6,10 @@ const questionRoute = require("./routes/questionRouter");
 const signinRouter = require("./routes/signin.route");
 const gameRouter = require("./routes/gameRouter");
 const examRouter = require("./routes/examRouter");
+const { ApolloServer } = require("apollo-server-express");
+const typeDefs = require("./graphql/schema");
+const resolvers = require("./graphql/resolver");
+const mongdoDataMethods = require("./graphql/data");
 //connect database
 const connectDB = async () => {
   try {
@@ -42,6 +46,22 @@ app.use("/signin", signinRouter);
 app.use("/account", accountRouter);
 app.use("/game", gameRouter);
 app.use("/exam", examRouter);
+
+const config = {
+  typeDefs: typeDefs,
+  resolvers: resolvers,
+  context: () => ({ mongdoDataMethods }),
+};
+async function startApolloServer(config) {
+  const server = new ApolloServer(config);
+  await server.start();
+  server.applyMiddleware({
+    app,
+    path: "/graphql",
+  });
+}
+
+startApolloServer(config); 
 app.get("/", (req, res) => {
   res.send("Hello world 22");
 });
