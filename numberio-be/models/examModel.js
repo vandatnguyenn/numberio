@@ -1,25 +1,27 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ExamSchema = new Schema({
-  ownerID: {
-    type: String,
-  },
   gameID: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Question',
+  },
+  questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
+  description: {
     type: String,
   },
-  questions: {
-    type: Array, //list câu hỏi dc láy tương ứng từ trường gameModel(độ khó, số lượng câu hỏi, đề tài)
+  timer: {
+    type: Number,
   },
   createAt: {
     type: Date,
     default: Date.now(),
   },
-  deleted: {
+  active: {
     type: Boolean,
     default: false,
   },
 });
 
-const ExamModel = mongoose.model("exam", ExamSchema);
+const ExamModel = mongoose.model('Exam', ExamSchema);
 module.exports = ExamModel;
