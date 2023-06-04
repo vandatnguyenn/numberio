@@ -17,9 +17,9 @@ export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
   const keycloak =  useMemo(() => {
     return new Keycloak({
-      url: 'http://127.0.0.1:8080',
-      realm: 'numberio',
-      clientId: 'numberio-fe',
+      url: process.env.REACT_APP_KEYCLOAK_URL,
+      realm: process.env.REACT_APP_KEYCLOAK_REALM,
+      clientId: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
     });
   }, []);
   const [data, setData] = useState({ user: null, token: null });

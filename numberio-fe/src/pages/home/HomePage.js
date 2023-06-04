@@ -1,11 +1,16 @@
 import React from "react";
-import { Container, Grid, Paper, Typography } from "@mui/material";
+import {  Grid, Paper, } from "@mui/material";
 import Leaderboard from "../../components/Leaderboard";
 import tree from "../../assets/images/tree.png";
-
+import bgimg from "../../assets/images/bg-img.png";
 const HomePage = () => {
   return (
-    <Grid container spacing={2} sx={{ margin: "0", width: "100%" }}>
+    <Grid container spacing={2} sx={{ margin: "0", width: "100%" ,
+        background: `url(${bgimg})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "contain",
+        backgroundPosition: "bottom",
+    }}>
       <Grid
         item
         xs={12}
