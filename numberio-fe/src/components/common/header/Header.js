@@ -72,7 +72,7 @@ function Header() {
     options: [
       {
         name: "Trang cá nhân",
-        link: "/user/profile",
+        link: "/profilePage",
       },
       {
         name: "Cài đặt",
