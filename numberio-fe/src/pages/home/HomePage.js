@@ -26,7 +26,17 @@ const HomePage = () => {
           <Leaderboard/>
         </Paper>
       </Grid>
-      <Grid item only={"lg"} md={8} sx={{ padding: "0",
+      <Grid item xs={12} md={4} sx={{ padding: "0", height: "600px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+       <Paper sx={{ height: "150px", width: "100%", background: '#ffffff', display: "flex", justifyContent: "center", flexDirection:"column", padding:"5px",borderRadius: "10px" }} >
+       <div className="font-face-pony" style={{ color: "#EC5C51", fontSize: "1.25rem", textAlign: "center"}}>
+       "Toán học là bước đầu tiên trong việc khám phá vũ trụ và sự tồn tại"
+       </div>
+       <div className="font-face-pony" style={{color: "CaptionText", fontSize:"1rem", textAlign: "end"}}>
+         Giáo sư Ngô Bảo Châu
+       </div>
+       </Paper>
+      </Grid>
+      <Grid item only={"lg"} md={4} sx={{ padding: "0",
         display: {xs: "none", md: "flex"}
       }}>
         <div style={{ height: "500px", width: "100%", display:"flex", flexDirection: "row-reverse"}}>

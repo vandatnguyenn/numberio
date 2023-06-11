@@ -1,9 +1,26 @@
 
+
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@font-face {
+  font-family: 'Pony';
+  src: local('Pony'), url('./assets/fonts/Pony.ttf') format('truetype');
+  font-weight: bold;
+}
+
+.font-face-pony {
+  font-family: 'Pony';
+}
 body {
   min-height: 100vh;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Pony',
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -11,9 +28,3 @@ body {
     display: flex;
     flex-direction: column;
   }
-
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}

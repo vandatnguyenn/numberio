@@ -249,33 +249,33 @@ const LearningPage = () => {
                   index < page * GAME_PER_PAGE
                 );
               })
-              .map((game) => {
+              .map((item) => {
                 return (
-                  <Grid item xs={4} key={game.id}>
+                  <Grid item xs={4} key={item.id}>
                     <Card
                       sx={{
                         boxShadow: 1,
                         borderRadius: 1,
                         border: 1,
                         borderColor:
-                          game.id === game?.id ? "primary.main" : "white",
+                          item.id === game?.id ? "primary.main" : "white",
                       }}>
                       <CardActionArea
                         onClick={() => {
-                          setGame(game);
+                          setGame(item);
                         }}>
                         <CardMedia
                           component="img"
                           height="140"
-                          image={game.image}
-                          alt={game.name}
+                          image={item.image}
+                          alt={item.name}
                         />
                         <CardContent>
                           <Typography gutterBottom variant="h5" component="div">
-                            {game.name}
+                            {item.name}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
-                            {game.description}
+                            {item.description}
                           </Typography>
                         </CardContent>
                       </CardActionArea>
@@ -348,7 +348,7 @@ const LearningPage = () => {
                     <Button
                       variant="contained"
                       key={type.id}
-                      color="info"
+                      color={type.id === typeGame.id ? "primary" : "info"}
                       sx={{
                         width: 200,
                         mt: 2,

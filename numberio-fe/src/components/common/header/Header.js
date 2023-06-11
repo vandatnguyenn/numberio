@@ -291,7 +291,7 @@ function Header() {
                       backgroundColor: "rgb(0, 255, 142)",
                     },
                     background:
-                      "linear-gradient(90deg, rgba(25,82,215,1) 0%, rgba(31,13,221,1) 48%, rgba(39,17,143,1) 100%)",
+                      "linear-gradient(90deg, rgba(25,127,252,1) 0%, rgba(48,136,242,1) 48%, rgba(46,82,232,1) 100%)",
                   }}
                   onClick={(event) => {
                     setAnchorEl(event.currentTarget);
