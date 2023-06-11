@@ -8,7 +8,6 @@ import {
   IconButton,
   Drawer,
   Avatar,
-  Container,
   Box,
   Menu,
   Divider,
@@ -28,18 +27,21 @@ import {
   Logout as LogoutIcon,
   ExpandMore,
 } from "@mui/icons-material";
+import { ReactComponent as LogoNoBackground } from "../../../assets/logo/logo-no-background.svg";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../../redux/selector";
+import { useAuth } from "../../../hooks/useAuth";
 
-function Header(props) {
-  const { user, setUser } = props;
+function Header() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
-  
+  const auth = useSelector(selectAuth);
+  const { signOut } = useAuth();
   const navbarItems = [
     {
       name: "Trang chủ",
-      link: "/dashboard",
+      link: "/",
       icon: <Home />,
     },
     {
@@ -58,10 +60,14 @@ function Header(props) {
       icon: <QuestionAnswer />,
     },
   ];
-  const userBox = {
-    name: `${user?.lastName}`,
+  const userButtonData = {
+    name: `${auth.user?.name}`,
     icon: (
-      <Avatar alt="avatar" sx={{ width: 25, height: 25 }} src={user?.avatar} />
+      <Avatar
+        alt="avatar"
+        sx={{ width: 25, height: 25 }}
+        src={auth.user?.avatar}
+      />
     ),
     options: [
       {
@@ -75,32 +81,36 @@ function Header(props) {
 
       {
         name: "Đăng xuất",
-        link: "/auth/login",
+        link: "/",
+        function: () => {
+          handleLogout();
+        },
       },
     ],
   };
-  
+  const handleLogout = async () => {
+    await signOut();
+  };
 
   return (
     <Box
+      backgroundColor="background.default"
       sx={{
-        paddingLeft: 10,
-        paddingRight: 10,
-        backgroundColor: "#36aedc",
-        color: "white",
-        height: "15vh",
+        padding: "0 2rem",
+        height: "100px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
       }}
     >
       <Box className="header-left">
-        <div className="header-logo">
-          <img
-            src="https://azco.vn/wp-content/uploads/2019/11/thumb-logo-la-gi.jpg"
-            className="logo"
-            alt="logo"
-          />
+        <div
+          className="header-logo"
+          onClick={() => {
+            navigate("/dashboard");
+          }}
+        >
+          <LogoNoBackground className="logo" />
         </div>
       </Box>
       <Box className="header-right">
@@ -166,7 +176,7 @@ function Header(props) {
                   </div>
                 ))}
               </div>
-              {user && (
+              {auth.isLogin && (
                 <Accordion
                   sx={{
                     backgroundColor: "#3cc2f5",
@@ -187,7 +197,7 @@ function Header(props) {
                       paddingLeft: "8px",
                     }}
                   >
-                    {userBox.icon}
+                    {userButtonData.icon}
                     <Typography
                       sx={{
                         marginLeft: "5px",
@@ -195,11 +205,11 @@ function Header(props) {
                         textTransform: "uppercase",
                       }}
                     >
-                      {userBox.name}
+                      {userButtonData.name}
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    {userBox.options.map((option, index) => {
+                    {userButtonData.options.map((option, index) => {
                       return (
                         <div key={index}>
                           <Divider />
@@ -207,8 +217,7 @@ function Header(props) {
                             <MenuItem
                               key={index}
                               onClick={() => {
-                                setUser(null);
-                                navigate(option.link);
+                                handleLogout();
                               }}
                             >
                               <LogoutIcon />
@@ -245,13 +254,16 @@ function Header(props) {
                   margin: "0 0.5rem",
                   borderRadius: "0.3rem",
                   "&:hover": {
-                    backgroundColor: "#4486F4",
+                    backgroundColor: "#ffffff",
+                    color: "#0080c6",
                   },
                   "&:active": {
-                    backgroundColor: "#4486F4",
+                    backgroundColor: "#ffffff",
+                    color: "#0080c6",
                   },
                   "&:focus": {
-                    backgroundColor: "#4486F4",
+                    backgroundColor: "#ffffff",
+                    color: "#0080c6",
                   },
                 }}
                 onClick={(event) => {
@@ -259,15 +271,14 @@ function Header(props) {
                   navigate(item.link);
                 }}
                 startIcon={item.icon}
-                variant="contained"
+                variant="text"
               >
                 {item.name}
               </Button>
             ))}
-            {user && (
+            {auth.isLogin && (
               <div>
                 <Button
-                  color="primary"
                   variant="contained"
                   sx={{
                     height: "3rem",
@@ -277,19 +288,21 @@ function Header(props) {
                     margin: "0 0.5rem",
                     borderRadius: "0.3rem",
                     "&:hover": {
-                      backgroundColor: "#4486F4",
+                      backgroundColor: "rgb(0, 255, 142)",
                     },
+                    background:
+                      "linear-gradient(90deg, rgba(25,82,215,1) 0%, rgba(31,13,221,1) 48%, rgba(39,17,143,1) 100%)",
                   }}
                   onClick={(event) => {
                     setAnchorEl(event.currentTarget);
                   }}
-                  startIcon={userBox.icon}
+                  startIcon={userButtonData.icon}
                   className="Header__right__item"
                 >
-                  {userBox.name}
+                  {userButtonData.name.slice(0, 7) + "..."}
                 </Button>
                 <Menu
-                  id={userBox.name}
+                  id={userButtonData.name}
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
                   onClose={() => {
@@ -299,7 +312,7 @@ function Header(props) {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  {userBox.options.map((option, index) => {
+                  {userButtonData.options.map((option, index) => {
                     return option.name === "Đăng xuất" ? (
                       <div key={index}>
                         <Divider />
@@ -307,8 +320,7 @@ function Header(props) {
                           key={index}
                           onClick={() => {
                             setAnchorEl(null);
-                            setUser(null);
-                            navigate(option.link);
+                            handleLogout();
                           }}
                         >
                           <Button startIcon={<LogoutIcon />}>

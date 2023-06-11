@@ -26,6 +26,9 @@ const GameSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  image: {
+    type: String,
+  },
 });
 
 GameSchema.set('toJSON', {

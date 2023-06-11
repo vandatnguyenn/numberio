@@ -2,6 +2,21 @@ const DEFAULT_PER_PAGE = 10;
 
 const questionSchema = require('../../models/questionSchema');
 const responseCode = require('../responseCode');
+const { extractUser, authorizeUser, authorizeAdmin } = require('./helper');
+
+const verifyUser = (_, callback) => {
+  extractUser(_, callback);
+  authorizeUser(_, callback);
+};
+
+const verifyAdmin = (_, callback) => {
+  extractUser(_, callback);
+  authorizeAdmin(_, callback);
+};
+
+const verifyGameSessionToken = (_, callback) => {
+  verifyGameSessionToken(_, callback);
+};
 
 const toObjectQuestions = (questions) => {
   return questions.map((question) => {
@@ -14,6 +29,11 @@ const toObjectQuestions = (questions) => {
 };
 
 const getAllQuestions = async (_, callback) => {
+  verifyUser(_, callback);
+  const user = extractUser(_, callback);
+  if (authorizeUser(user)) {
+  }
+
   const questions = await questionSchema.find({});
 
   const toObject = questions.map((question) => question.toObject());
@@ -25,6 +45,7 @@ const getAllQuestions = async (_, callback) => {
 };
 
 const getQuestionPage = async (_, callback) => {
+  verifyUser(_, callback);
   let { _page, _perpage, _difficulty, _orderAsc } = _.request;
   let { page, perpage, difficulty, orderAsc } = _.request;
   let difficultyFilter = {};
@@ -73,6 +94,7 @@ const getQuestionPage = async (_, callback) => {
 };
 
 const createQuestion = async (_, callback) => {
+  verifyAdmin(_, callback);
   const newQuestion = _.request;
 
   try {
@@ -87,6 +109,7 @@ const createQuestion = async (_, callback) => {
 };
 
 const getQuestionById = async (_, callback) => {
+  verifyUser(_, callback);
   const { id } = _.request;
 
   try {
@@ -102,6 +125,7 @@ const getQuestionById = async (_, callback) => {
 };
 
 const updateQuestion = async (_, callback) => {
+  verifyAdmin(_, callback);
   const updatedQuestion = _.request;
 
   try {
@@ -131,6 +155,7 @@ const updateQuestion = async (_, callback) => {
 };
 
 const deleteQuestion = async (_, callback) => {
+  verifyAdmin(_, callback);
   const { id } = _.request;
 
   try {
@@ -149,6 +174,7 @@ const deleteQuestion = async (_, callback) => {
 };
 
 const randomQuestions = async (_, callback) => {
+  verifyGameSessionToken(_, callback);
   const { _difficulty, _total, total, difficulty } = _.request;
 
   if (!_total || total < 0) {

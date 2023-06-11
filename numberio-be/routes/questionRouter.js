@@ -1,11 +1,26 @@
-const express = require("express");
-const questionController = require("../controllers/questionController");
-const auth = require("../middlewares/auth");
-const authAdmin = require("../middlewares/authAdmin");
-const router = express.Router();
+const express = require('express');
+const questionController = require('../controllers/questionController');
+const questionRouter = express.Router();
+const keycloak = require('../middlewares/authentication/keycloak');
+const { authorizeAdmin } = require('../middlewares/authorization');
+// re-use questionService
+questionRouter.post(
+  '/',
+  keycloak.extractUser,
+  authorizeAdmin,
+  questionController.addQuestion
+);
+questionRouter.get(
+  '/',
+  keycloak.extractUser,
+  authorizeAdmin,
+  questionController.getQuestions
+);
+questionRouter.put(
+  '/',
+  keycloak.extractUser,
+  authorizeAdmin,
+  questionController.updateQuestion
+);
 
-router.post("/addQuestion", auth, authAdmin, questionController.addQuestion);
-router.get("/getQuestions", questionController.getQuestions);
-router.put("/updateQuestion/:id", auth, authAdmin, questionController.updateQuestion);
-router.delete("/deleteQuestion/:id", auth, authAdmin, questionController.delQuestion);
-module.exports = router;
+module.exports = questionRouter;

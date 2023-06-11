@@ -1,25 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { PORT, MONGO_DB_URL } = require('./utils/config');
 
 const app = express();
-<<<<<<< HEAD
-const accountRouter = require("./routes/accountRouter");
-const questionRoute = require("./routes/questionRouter");
-const signinRouter = require("./routes/signin.route");
-const gameRouter = require("./routes/gameRouter");
-const examRouter = require("./routes/examRouter");
-const { ApolloServer } = require("apollo-server-express");
-const typeDefs = require("./graphql/schema");
-const resolvers = require("./graphql/resolver");
-const mongdoDataMethods = require("./graphql/data");
-=======
+// const accountRouter = require("./routes/accountRouter");
+// const questionRoute = require("./routes/questionRouter");
+// const signinRouter = require("./routes/signin.route");
+
 const gameRouter = require('./routes/gameRouter');
 const examRouter = require('./routes/examRouter');
 const gameSessionRouter = require('./routes/gameSessionRouter');
+const HistoryModel = require('./models/historyModel');
 
 mongoose.set('strictQuery', false);
->>>>>>> 45b6950cd67427cbb7489b1d28ef26575c605cf9
 //connect database
 // const connectDB = async () => {
 //   try {
@@ -47,8 +41,8 @@ mongoose
 //temporary router index
 var bodyParser = require('body-parser');
 const requestLogger = require('./middlewares/requestLogger');
-const HistoryModel = require('./models/historyModel');
-
+const questionRouter = require('./routes/questionRouter');
+app.use(cors());
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -62,48 +56,19 @@ app.use(function (req, res, next) {
 });
 // app.use('/question', questionRoute);
 ///
-<<<<<<< HEAD
-app.use("/signin", signinRouter);
-app.use("/account", accountRouter);
-app.use("/game", gameRouter);
-app.use("/exam", examRouter);
-
-const config = {
-  typeDefs: typeDefs,
-  resolvers: resolvers,
-  context: () => ({ mongdoDataMethods }),
-};
-async function startApolloServer(config) {
-  const server = new ApolloServer(config);
-  await server.start();
-  server.applyMiddleware({
-    app,
-    path: "/graphql",
-  });
-}
-
-startApolloServer(config); 
-app.get("/", (req, res) => {
-  res.send("Hello world 22");
-});
-const port = 4000;
-app.listen(process.env.PORT || port, () => {
-  console.log(
-    `Numberio is runing on  http://localhost:${process.env.PORT || port}`
-  );
-=======
-// app.use('/signin', signinRouter);
-// app.use('/account', accountRouter);
 
 app.use(requestLogger);
 
 app.use('/api/game', gameRouter);
+// this api is under development
 app.use('/api/exam', examRouter);
 app.use('/api/gameSession', gameSessionRouter);
+app.use('/api/question', questionRouter);
+
+// temp api for unit test - moving to graphql for history query
 app.get('/api/history', async (req, res) => {
   const result = await HistoryModel.find({});
   return res.status(200).json(result);
->>>>>>> 45b6950cd67427cbb7489b1d28ef26575c605cf9
 });
 
 app.get('/', (req, res) => {
@@ -111,4 +76,3 @@ app.get('/', (req, res) => {
 });
 
 module.exports = app;
-

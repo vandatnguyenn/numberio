@@ -1,32 +1,35 @@
-import React, { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import { Header, Footer } from "../common";
+import {useAuth} from "../../hooks/useAuth";
+import { LoadingPage } from "../Loading";
 
 const ProtectedLayout = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useLocalStorage("user", {});
+  const { isAuthenticated, userInfo } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const lastURL = window.location.pathname;
-    if (!lastURL.startsWith("/auth")) {
-      if (!user) {
-        navigate("/auth/login");
+    const checkAuth = async () => {
+      const isAuth = await isAuthenticated();
+      if (isAuth) {
+        await userInfo();
       }
-    }
+      setIsLoading(false);
+    };
+    checkAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
-    <>
-      <Header user={user} setUser={setUser}></Header>
-      <Outlet
-        context={{
-          user: user,
-          setUser: setUser,
-        }}
-      ></Outlet>
-      <Footer></Footer>
-    </>
+      <>
+        <Header />
+        <Outlet />
+        <Footer />
+      </>
   );
 };
 

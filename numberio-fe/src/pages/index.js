@@ -1,11 +1,11 @@
 import NotFound from "./notfound";
 import SignIn from "./signin";
 import LearningPage from "./learning";
-import AdminPage from "./admin";
+import HomePage from "./home";
 
 export {
     NotFound,
     SignIn,
     LearningPage,
-    AdminPage,
+    HomePage,
 }
