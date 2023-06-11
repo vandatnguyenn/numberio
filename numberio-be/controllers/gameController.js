@@ -2,13 +2,13 @@ const GameModel = require('../models/gameModel');
 const gameController = {
   postGame: async (req, res) => {
     try {
-      let { description, gameURL, name } = req.body;
+      let { description, gameURL, name, image } = req.body;
       const game = await GameModel.findOne({
         name: name,
       });
 
       if (game) res.status(400).json({ message: 'game is realdy exists' });
-      const newGame = new GameModel({ description, gameURL, name });
+      const newGame = new GameModel({ description, gameURL, name, image });
       await newGame.save();
       res.status(201).json({ message: 'created game' });
     } catch (error) {

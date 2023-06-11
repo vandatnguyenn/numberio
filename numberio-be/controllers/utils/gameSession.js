@@ -2,7 +2,7 @@ const { default: mongoose } = require('mongoose');
 const GameModel = require('../../models/gameModel');
 const questionService = require('../../utils/gRPC/services/questionService');
 
-const generateGameSessionData = async (total, level) => {
+const generateGameSessionData = async (total, level, token) => {
   let levelAsNumber = 1;
   switch (level) {
     case 'easy':
@@ -19,7 +19,11 @@ const generateGameSessionData = async (total, level) => {
       break;
   }
 
-  const questions = await questionService.randomQuestions(total, levelAsNumber);
+  const questions = await questionService.randomQuestions(
+    total,
+    levelAsNumber,
+    token
+  );
   const objectIds = questions.map((question) =>
     mongoose.Types.ObjectId(question.id)
   );
@@ -57,6 +61,7 @@ const generateHistory = async (gameSession, gameResult) => {
     level: gameSession.level,
     score,
     answers,
+    email: gameSession.email,
   };
 
   return result;

@@ -4,7 +4,7 @@ const config = require('./utils/config');
 const server = require('./gRPC/server');
 
 mongoose
-  .connect(config.MONGO_DB_URI)
+  .connect(config.MONGO_DB_URL)
   .then(() => {
     console.log('connected to MongoDB');
   })

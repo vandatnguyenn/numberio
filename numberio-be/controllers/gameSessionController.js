@@ -14,10 +14,11 @@ const {
 const gameSessionController = {
   postGameSession: async (req, res, next) => {
     try {
+      const token = req.user.token;
       //   const email = req.user.email;
-      const email = 'test@gmail.com';
+      const email = req.user.email;
       const { gameId, level } = req.body;
-      const questions = await generateGameSessionData(5, level);
+      const questions = await generateGameSessionData(5, level, token);
       const gameExist = await GameModel.findById(gameId);
       if (!gameExist) {
         return res.status(400).send();
