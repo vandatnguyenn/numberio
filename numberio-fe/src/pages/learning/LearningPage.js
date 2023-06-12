@@ -15,92 +15,96 @@ const gamesDataTemplate = [
     typeGames: [
       {
         id: 1,
-        name: "Dễ",
+        name: 'Dễ',
       },
       {
         id: 2,
-        name: "Trung bình",
+        name: 'Trung bình',
       },
       {
         id: 3,
-        name: "Khó",
+        name: 'Khó',
       },
     ],
-    status: "ACTIVE",
-    createdAt: "2021-09-01T07:00:00.000+00:00",
-    updatedAt: "2021-09-01T07:00:00.000+00:00",
+    status: 'ACTIVE',
+    createdAt: '2021-09-01T07:00:00.000+00:00',
+    updatedAt: '2021-09-01T07:00:00.000+00:00',
   },
   {
     id: 2,
     name: "Đậu xe",
     description: "Đậu xe...",
     image:
-      "https://monkeymedia.vcdn.com.vn/upload/web/storage_web/29-03-2022_15:10:35_toan-lop-2-sach-giao-khoa.jpg",
-    link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
-    status: "ACTIVE",
+      'https://monkeymedia.vcdn.com.vn/upload/web/storage_web/29-03-2022_15:10:35_toan-lop-2-sach-giao-khoa.jpg',
+    link: 'https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg',
+    status: 'ACTIVE',
     typeGames: [
       {
         id: 1,
-        name: "Dễ",
+        name: 'Dễ',
       },
       {
         id: 2,
-        name: "Trung bình",
+        name: 'Trung bình',
       },
       {
         id: 3,
-        name: "Khó",
+        name: 'Khó',
       },
     ],
-    createdAt: "2021-09-01T07:00:00.000+00:00",
-    updatedAt: "2021-09-01T07:00:00.000+00:00",
+    createdAt: '2021-09-01T07:00:00.000+00:00',
+    updatedAt: '2021-09-01T07:00:00.000+00:00',
   },
   {
     id: 3,
     name: "Đá banh",
     description: "Đá banh...",
     image:
-      "http://cdn.voh.com.vn/voh//thumbnail/2022/07/31/cau-do-toan-hoc-voh-1.jpg",
-    link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
-    status: "ACTIVE",
+      'http://cdn.voh.com.vn/voh//thumbnail/2022/07/31/cau-do-toan-hoc-voh-1.jpg',
+    link: 'https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg',
+    status: 'ACTIVE',
     typeGames: [
       {
         id: 1,
-        name: "Dễ",
+        name: 'Dễ',
       },
       {
         id: 2,
-        name: "Trung bình",
+        name: 'Trung bình',
       },
       {
         id: 3,
-        name: "Khó",
+        name: 'Khó',
       },
     ],
-    createdAt: "2021-09-01T07:00:00.000+00:00",
-    updatedAt: "2021-09-01T07:00:00.000+00:00",
+    createdAt: '2021-09-01T07:00:00.000+00:00',
+    updatedAt: '2021-09-01T07:00:00.000+00:00',
   },
 ];
 const typeGames = [
   {
     id: 0,
-    name: "Dễ",
+    name: 'Dễ',
+    key: 'easy',
   },
   {
     id: 1,
-    name: "Trung bình",
+    name: 'Trung bình',
+    key: 'medium',
   },
   {
     id: 2,
-    name: "Khó",
+    name: 'Khó',
+    key: 'hard',
   },
 ];
 
 const LearningPage = () => {
+  const accessToken = useSelector((state) => state.auth.token);
   const [game, setGame] = useState(null);
   const [gamesData, setGamesData] = useState([]);
   const [page, setPage] = useState(1);
-  const [typeGame, setTypeGame] = useState(1);
+  const [typeGame, setTypeGame] = useState(typeGames[0]);
   const [postDataExam, setPostDataExam] = useState({});
   const user = useSelector(selectAuth).user;
   const GAME_PER_PAGE = 3;
@@ -126,6 +130,35 @@ const LearningPage = () => {
     const link = "http://" + game.gameURL + "?exam_id=" + exam.data.id;
     window.open(link, "_blank"); //TODO: Hoặc sử dụng react-router-dom và iframe để hiển thị game
   };
+
+  useEffect(() => {
+    // let fecthGameData = async () => {
+    //   let data = await axios.get(`${BACKEND_URL}/game/all`);
+    //   console.log(data);
+    //   setGamesData(data.data);
+    // };
+    // fecthGameData();
+    fetchGameData(accessToken);
+  }, []);
+
+  // const handleStartGame = async () => {
+  //   try {
+  //     let sessionInfo = await gameService.startGameSession(
+  //       game.id,
+  //       typeGame.key,
+  //       accessToken
+  //     );
+
+  //     console.log(sessionInfo);
+  //     const targetLink = `${sessionInfo.gameUrl}/?token=${sessionInfo.token}`;
+  //     window.open(targetLink, '_blank');
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+
+  //   //TODO: Hoặc sử dụng react-router-dom và iframe để hiển thị game
+  // };
+
   return (
     <Grid container sx={{flexGrow:1}}>
       <Grid item xs={8}>
@@ -181,10 +214,11 @@ const LearningPage = () => {
           </Typography>
           <div
             style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-            }}>
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             <Pagination
               color="primary"
               count={NUMBER_OF_PAGE}
@@ -201,9 +235,10 @@ const LearningPage = () => {
         item
         xs={4}
         sx={{
-          mt: 4,
+          mt: 1,
           p: 2,
-        }}>
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -220,7 +255,7 @@ const LearningPage = () => {
               <Typography variant="h5" component="div">
                 Tên trò chơi: {game.name}
               </Typography>
-              <Typography variant="h6" component="div">
+              <Typography variant="h6" component="div" sx={{ mb: 4 }}>
                 Mô tả: {game.description}
               </Typography>
               <Divider/>  
@@ -247,7 +282,8 @@ const LearningPage = () => {
                       }}
                       onClick={() => {
                         setTypeGame(type);
-                      }}>
+                      }}
+                    >
                       {type.name}
                     </Button>
                   );
@@ -264,7 +300,8 @@ const LearningPage = () => {
                     color: 'white'
                   }}
                   endIcon={<ArrowForward />}
-                  onClick={() => handleStartGame()}>
+                  onClick={() => handleStartGame()}
+                >
                   Bắt đầu
                 </Button>
               </Box>
@@ -275,6 +312,5 @@ const LearningPage = () => {
     </Grid>
   );
 };
-
 
 export default LearningPage;

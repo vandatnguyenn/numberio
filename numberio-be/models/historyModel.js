@@ -1,16 +1,46 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const historySchema = new Schema({
-  exam_id: {
+
+const HistorySchema = new Schema({
+  gameId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Game',
+  },
+  description: {
     type: String,
   },
-  answers: {
-    //là các đáp án user đã ghi nhận sau đó check vói correct answer trong examid, lấy điểm lưu vào trường score
-    type: Array,
+  questions: [{ type: mongoose.Types.ObjectId, ref: 'Question' }],
+  email: {
+    type: String,
+  },
+  answers: [{ type: Number }],
+  type: {
+    type: String,
+    enum: ['exam', 'game'],
+  },
+  level: {
+    type: String,
+    enum: ['easy', 'medium', 'hard', 'exam level'],
   },
   score: {
-    type: int,
+    type: Number,
+  },
+
+  createAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
-module.exports = historySchema;
-// lịch sử thi của mỗi user sẽ được lưu lại
+
+HistorySchema.set('toObject', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+const HistoryModel = mongoose.model('History', HistorySchema);
+
+module.exports = HistoryModel;

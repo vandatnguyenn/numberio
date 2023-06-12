@@ -1,71 +1,47 @@
-const Questions = require("../models/questionModel");
-
-exports.addQuestion = async (req, res) => {
-  const { Description, Answers, WrongAnswers, Difficulty } = req.body;
+const Questions = require('../models/questionModel');
+const questionService = require('../utils/gRPC/services/questionService');
+exports.addQuestion = async (req, res, next) => {
+  const newQuestion = req.body;
+  const token = req.user.token;
   try {
-    const newQuestion = new Questions({
-      description: Description,
-      answers: Answers,
-      wrongAnswers: WrongAnswers,
-      difficulty: Difficulty,
-    });
-
-    await newQuestion.save();
-    console.log("Add new question successfully!");
-    res.status(200).json({
-      message: "Add new question successfully",
-    });
+    const result = await questionService.createQuestion(newQuestion, token);
+    return res.status(201).json(result);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "add question failed",
-    });
+    return res.status(400).send();
   }
 };
-exports.updateQuestion = (req, res) => {
-  try {
-    const { id, description, answers, wrongAnswers, difficulty } = req.body;
-    const question = Questions.findByIdAndUpdate(id, {
-      description,
-      answers,
-      wrongAnswers,
-      difficulty,
-    });
-    if (!question)
-      return res.status(400).json({ message: "question is not exist" });
-    return res.status(200).json({ message: "updated question" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-exports.delQuestion = async (req, res) => {
-  try {
-    let question = await Questions.findByIdAndDelete(req.params.id);
-    if (!question) res.status(400).json({ message: "question is not exist" });
-    return res.status(200).json({ message: "deleted question" });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-exports.getQuestions = async (req, res) => {
-  const { QuestionQuanity, Difficulty } = req.body;
-  //console.log(Difficulty);
-  try {
-    const arrayQuestions = await Questions.find({
-      difficulty: Difficulty,
-    }).exec();
 
-    //console.log(arrayQuestions);
-    arrayQuestions.sort(() => Math.random() - 0.5);
-    const result = arrayQuestions.slice(0, QuestionQuanity);
+exports.updateQuestion = async (req, res, next) => {
+  try {
+    const result = await questionService.updateQuestion(
+      req.body,
+      req.user.token
+    );
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(400).send();
+  }
+};
 
-    res.status(200).json({
-      arrayQuestions: result,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "get question failed",
-    });
+// dont del question
+exports.delQuestion = async (req, res, next) => {};
+
+exports.getQuestions = async (req, res, next) => {
+  // page, perpage, difficulty, orderAsc
+  let page = req.query.page;
+  let perpage = req.query.perpage;
+  let difficulty = req.query.difficulty;
+  let orderAsc = req.query.orderAsc;
+
+  console.log(perpage);
+  try {
+    const result = await questionService.getQuestionPage(
+      { page, perpage, difficulty, orderAsc },
+      req.user.token
+    );
+    console.log(result);
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(400).send();
   }
 };
