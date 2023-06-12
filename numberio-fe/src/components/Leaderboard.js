@@ -27,21 +27,17 @@ const top5data = [
 ];
 const listgame = [
   {
-    name: "Trò chơi 1",
+    name: "Rắn săn mồi",
     id: 1,
   },
   {
-    name: "Trò chơi 2",
+    name: "Đậu xe",
     id: 2,
   },
   {
-    name: "Trò chơi 3",
+    name: "Đá banh",
     id: 3,
-  },
-  {
-    name: "Trò chơi 4",
-    id: 4,
-  },
+  }
 ];
 const Leaderboard = () => {
   const [game, setGame] = React.useState(1);

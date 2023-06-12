@@ -18,12 +18,12 @@
 
 .wrapper .left{
   width: 15%;
-  background: linear-gradient(to right,#0D5869,#4ABFFF);
+  background: #4ABFFF;
   padding: 30px 25px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   text-align: center;
-  color: #fff;
+  color: #000;
 }
 
 .wrapper .left img{
@@ -33,14 +33,12 @@
 .wrapper .left h4{
   margin-bottom: 10px;  
   font-size: 25px;
-  color: #e0e0e0;
 }
 
 .wrapper .left p{
   padding-bottom: 0%;  
   margin-bottom: 2px;
   font-size: 20px;
-  color: #e0e0e0;
 }
 
 .wrapper .right{
@@ -49,7 +47,7 @@
   padding: 30px 25px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background: linear-gradient(to right,#FFA91F,#E68B30);
+  background: #f9f5f4;
 }
 
 .wrapper .right .info,
@@ -62,7 +60,7 @@
     margin-bottom: 5px;
     padding-bottom: 5px;
     border-bottom: 1px solid #e0e0e0;
-    color: #FF481F;
+    color: #353c4e;
     font-size: 25px;
   text-transform: uppercase;
   letter-spacing: 5px;
@@ -86,7 +84,7 @@
 .wrapper .right .info_data .data p{
   font-size: 20px;
   margin-bottom: 10px;
-  color: #F7F7F7;
+  color: #807f7f;
 }
 .wrapper .right .gamehistories .gamecontainer{
   height: 40vh;

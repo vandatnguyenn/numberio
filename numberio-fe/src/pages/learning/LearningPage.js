@@ -8,8 +8,8 @@ import { selectAuth } from "../../redux/selector";
 const gamesDataTemplate = [
   {
     id: 1,
-    name: "Game 1",
-    description: "Game 1 description",
+    name: "Rắn săn mồi",
+    description: "Rắn săn mồi...",
     image: "https://photo.tinhte.vn/store/2014/02/2376096_1_VN.png",
     link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
     typeGames: [
@@ -32,8 +32,8 @@ const gamesDataTemplate = [
   },
   {
     id: 2,
-    name: "Game 2",
-    description: "Game 2 description",
+    name: "Đậu xe",
+    description: "Đậu xe...",
     image:
       "https://monkeymedia.vcdn.com.vn/upload/web/storage_web/29-03-2022_15:10:35_toan-lop-2-sach-giao-khoa.jpg",
     link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
@@ -57,8 +57,8 @@ const gamesDataTemplate = [
   },
   {
     id: 3,
-    name: "Game 3",
-    description: "Game 3 description",
+    name: "Đá banh",
+    description: "Đá banh...",
     image:
       "http://cdn.voh.com.vn/voh//thumbnail/2022/07/31/cau-do-toan-hoc-voh-1.jpg",
     link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
@@ -79,114 +79,6 @@ const gamesDataTemplate = [
     ],
     createdAt: "2021-09-01T07:00:00.000+00:00",
     updatedAt: "2021-09-01T07:00:00.000+00:00",
-  },
-  {
-    id: 4,
-    name: "Game 4",
-    description: "Game 4 description",
-    image:
-      "https://monkeymedia.vcdn.com.vn/upload/web/storage_web/29-03-2022_15:10:35_toan-lop-2-sach-giao-khoa.jpg",
-    link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
-    status: "ACTIVE",
-    typeGames: [
-      {
-        id: 1,
-        name: "Dễ",
-      },
-      {
-        id: 2,
-        name: "Trung bình",
-      },
-      {
-        id: 3,
-        name: "Khó",
-      },
-    ],
-    createdAt: "2021-09-01T07:00:00.000+00:00",
-    updatedAt: "2021-09-01T07:00:00.000+00:00",
-  },
-  {
-    id: 5,
-    name: "Game 5",
-    description: "Game 5 description",
-    image: "https://photo.tinhte.vn/store/2014/02/2376096_1_VN.png",
-    link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
-    status: "ACTIVE",
-    typeGames: [
-      {
-        id: 1,
-        name: "Dễ",
-      },
-      {
-        id: 2,
-        name: "Trung bình",
-      },
-      {
-        id: 3,
-        name: "Khó",
-      },
-    ],
-    createdAt: "2021-09-01T07:00:00.000+00:00",
-    updatedAt: "2021-09-01T07:00:00.000+00:00",
-  },
-  {
-    id: 6,
-    name: "Game 6",
-    description: "Game 6 description",
-    image:
-      "http://cdn.voh.com.vn/voh//thumbnail/2022/07/31/cau-do-toan-hoc-voh-1.jpg",
-    link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
-    status: "ACTIVE",
-
-    createdAt: "2021-09-01T07:00:00.000+00:00",
-    updatedAt: "2021-09-01T07:00:00.000+00:00",
-  },
-  {
-    id: 7,
-    name: "Game 7",
-    description: "Game 7 description",
-    image: "https://photo.tinhte.vn/store/2014/02/2376096_1_VN.png",
-    link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
-    status: "ACTIVE",
-    typeGames: [
-      {
-        id: 1,
-        name: "Dễ",
-      },
-      {
-        id: 2,
-        name: "Trung bình",
-      },
-      {
-        id: 3,
-        name: "Khó",
-      },
-    ],
-    createdAt: "2021-09-01T07:00:00.000+00:00",
-    updatedAt: "2021-09-01T07:00:00.000+00:00",
-  },
-  {
-    id: 8,
-    name: "Game 8",
-    description: "Game 8 description",
-    image:
-      "https://monkeymedia.vcdn.com.vn/upload/web/storage_web/29-03-2022_15:10:35_toan-lop-2-sach-giao-khoa.jpg",
-    link: "https://kiemtientuweb.com/ckfinder/userfiles/images/avatar-fb/avatar-fb-1.jpg",
-    status: "ACTIVE",
-    typeGames: [
-      {
-        id: 1,
-        name: "Dễ",
-      },
-      {
-        id: 2,
-        name: "Trung bình",
-      },
-      {
-        id: 3,
-        name: "Khó",
-      },
-    ],
   },
 ];
 const typeGames = [
