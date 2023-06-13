@@ -35,11 +35,11 @@ jobs:
     
     
   merge-branch:
-    runs-on: windows-latest
+    runs-on: linux-latest
     steps:
       - uses: actions/checkout@master
       - name: Merge staging -> main
-        uses: devmasx/merge-branch@master
+        uses: giaHao/merge-branch@master
         with:
           type: now
           target_branch: main
