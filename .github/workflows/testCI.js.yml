@@ -36,7 +36,8 @@ jobs:
     
   merge-branch:
     name: Create PR Release to Main
-    permissions: read-all|write-all
+    permissions: 
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
