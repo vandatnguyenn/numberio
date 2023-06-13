@@ -34,31 +34,43 @@ jobs:
     - run: npm test
     
     
+#   merge-branch:
+#     name: Create PR Release to Main
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: git checkout
+#         uses: actions/checkout@v3
+
+
+#       # https://github.com/marketplace/actions/github-pull-request-action
+#       - name: create pull request
+#         id: open-pr
+#         uses: repo-sync/pull-request@v2
+#         with:
+#           github_token: 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
+#           destination_branch: ${{ github.event.repository.default_branch }}
+#           pr_title: "[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}"
+#           pr_body: "Automated Pull Request"
+#           pr_reviewer: "vandatnguyen"
+#           pr_assignee: "vandatnguyen"
+
+#       # https://github.com/marketplace/actions/enable-pull-request-automerge
+#       - name: enable automerge
+#         if: steps.open-pr.outputs.pr_number != ''
+#         uses: peter-evans/enable-pull-request-automerge@v2
+#         with:
+#           token: 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
+#           pull-request-number: ${{ steps.open-pr.outputs.pr_number }}
+#           merge-method: merge
   merge-branch:
-    name: Create PR Release to Main
     runs-on: ubuntu-latest
     steps:
-      - name: git checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@master
 
-
-      # https://github.com/marketplace/actions/github-pull-request-action
-      - name: create pull request
-        id: open-pr
-        uses: repo-sync/pull-request@v2
+      - name: Merge staging -> main
+        uses: devmasx/merge-branch@master
         with:
+          type: now
+          target_branch: main
+          message: Merge staging into uat
           github_token: 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
-          destination_branch: ${{ github.event.repository.default_branch }}
-          pr_title: "[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}"
-          pr_body: "Automated Pull Request"
-          pr_reviewer: "vandatnguyen"
-          pr_assignee: "vandatnguyen"
-
-      # https://github.com/marketplace/actions/enable-pull-request-automerge
-      - name: enable automerge
-        if: steps.open-pr.outputs.pr_number != ''
-        uses: peter-evans/enable-pull-request-automerge@v2
-        with:
-          token: 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
-          pull-request-number: ${{ steps.open-pr.outputs.pr_number }}
-          merge-method: merge
