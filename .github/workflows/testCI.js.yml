@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Merge staging -> main
-        uses: giaHao/merge-branch@master
+        uses: devmasx/merge-branch@master
         with:
           type: now
           target_branch: main
