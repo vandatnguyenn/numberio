@@ -41,6 +41,7 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v3
         with:
+          username: vandatnguyen
           token: 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
 
       # https://github.com/marketplace/actions/github-pull-request-action
