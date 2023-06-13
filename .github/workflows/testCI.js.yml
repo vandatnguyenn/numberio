@@ -40,8 +40,7 @@ jobs:
     steps:
       - name: git checkout
         uses: actions/checkout@v3
-        with:
-          token: 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
+
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request
