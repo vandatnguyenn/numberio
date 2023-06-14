@@ -1,0 +1,41 @@
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .mainContainer {
+    width: 90%;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  
+  .rowContainer {
+    display: flex;
+    margin: 10px 0;
+  }
+  
+  .label {
+    width: 10%;
+  }
+  
+  .textField {
+    width: 60%;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    margin: 10px 0 50px 10%;
+  }
+  
+  .saveButton {
+    margin: 0 20px 0 0;
+    width: 10%;
+    margin-right: 5px;
+  }
+  
+  .cancelButton {
+    margin: 0 0 0 20px;
+    width: 10%;
+    margin-left: 5px;
+  }
