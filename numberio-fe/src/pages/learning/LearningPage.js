@@ -5,6 +5,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../../constant";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../../redux/selector";
+import gameService from "../../services/game.js";
 const gamesDataTemplate = [
   {
     id: 1,
@@ -110,54 +111,54 @@ const LearningPage = () => {
   const GAME_PER_PAGE = 3;
   const NUMBER_OF_PAGE = Math.ceil(gamesData.length / GAME_PER_PAGE);
   useEffect(() => {
-    // let fecthGameData = async () => {
-    //   let data = await axios.get(`${BACKEND_URL}/game/all`);
-    //   console.log(data);
-    //   setGamesData(data.data);
-    // };
-    // fecthGameData();
+    let fecthGameData = async () => {
+      let data = await axios.get(`${BACKEND_URL}/game/all`);
+      console.log(data);
+      setGamesData(data.data);
+    };
+    fecthGameData();
 
     setGamesData(gamesDataTemplate);
   }, []);
-  const handleStartGame = async () => {
-    let postExam = {
-      game_id: game._id,
-      user_id: user,
-      game_type: typeGame.id,
-    };
-    let exam = await axios.post(`${BACKEND_URL}/exam/post`, postExam);
-    console.log(exam.data.id);
-    const link = "http://" + game.gameURL + "?exam_id=" + exam.data.id;
-    window.open(link, "_blank"); //TODO: Hoặc sử dụng react-router-dom và iframe để hiển thị game
-  };
+  // const handleStartGame = async () => {
+  //   let postExam = {
+  //     game_id: game._id,
+  //     user_id: user,
+  //     game_type: typeGame.id,
+  //   };
+  //   let exam = await axios.post(`${BACKEND_URL}/exam/post`, postExam);
+  //   console.log(exam.data.id);
+  //   const link = "http://" + game.gameURL + "?exam_id=" + exam.data.id;
+  //   window.open(link, "_blank"); //TODO: Hoặc sử dụng react-router-dom và iframe để hiển thị game
+  // };
 
   useEffect(() => {
-    // let fecthGameData = async () => {
-    //   let data = await axios.get(`${BACKEND_URL}/game/all`);
-    //   console.log(data);
-    //   setGamesData(data.data);
-    // };
-    // fecthGameData();
-    fetchGameData(accessToken);
+    let fecthGameData = async () => {
+      let data = await axios.get(`${BACKEND_URL}/game/all`);
+      console.log(data);
+      setGamesData(data.data);
+    };
+    fecthGameData();
+    fecthGameData(accessToken);
   }, []);
 
-  // const handleStartGame = async () => {
-  //   try {
-  //     let sessionInfo = await gameService.startGameSession(
-  //       game.id,
-  //       typeGame.key,
-  //       accessToken
-  //     );
+  const handleStartGame = async () => {
+    try {
+      let sessionInfo = await gameService.startGameSession(
+        game.id,
+        typeGame.key,
+        accessToken
+      );
 
-  //     console.log(sessionInfo);
-  //     const targetLink = `${sessionInfo.gameUrl}/?token=${sessionInfo.token}`;
-  //     window.open(targetLink, '_blank');
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
+      console.log(sessionInfo);
+      const targetLink = `${sessionInfo.gameUrl}/?token=${sessionInfo.token}`;
+      window.open(targetLink, '_blank');
+    } catch (err) {
+      console.log(err);
+    }
 
-  //   //TODO: Hoặc sử dụng react-router-dom và iframe để hiển thị game
-  // };
+    //TODO: Hoặc sử dụng react-router-dom và iframe để hiển thị game
+  };
 
   return (
     <Grid container sx={{flexGrow:1}}>
