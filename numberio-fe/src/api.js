@@ -1,13 +1,24 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: "http://localhost:3001",
 });
 
 export const signinWithGoogle = async (payload) => {    
     const result = await api({
         method: 'post',
         url: '/signin/google',
+        data: payload
+    }).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
+    return result.data;
+}
+
+export const addQuestion = async (payload) => {    
+    const result = await api({
+        method: 'post',
+        url: '/api/question',
         data: payload
     }).catch((err) => {
         throw new Error(err.response.data.message);

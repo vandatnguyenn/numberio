@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import { TextField, Button, Container, Stack } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { Link, useHref } from "react-router-dom"
-// import { addQuestion } from '../../api';
+import { addQuestion } from '../../api';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useNavigate } from "react-router-dom";
-import './addQuestion.css'
+import './addQuestion.css';
+import AlertDialog from '../../components/Dialog';
 
 const AddQuestion = (props) => {
   
@@ -20,6 +21,7 @@ const AddQuestion = (props) => {
   const [wrongAnswer3, setWrongAnswer3] = useState('');
   const [difficulty, setDifficulty] = useState(1);
   const [questionType, setQuestionType] = useState("Trắc nghiệm nhiều đáp án");
+  const [allert, setAllert] = useState(false);
   
   const TrueAnswerCssTextField = styled(TextField)({
       '& label.Mui-focused': {
@@ -62,19 +64,22 @@ const AddQuestion = (props) => {
   });
 
   function handleSubmit(event) {
-    // event.preventDefault();
-    // const payload = {
-    //   Description: description, 
-    //   Answers: trueAnswer, 
-    //   WrongAnswers: [wrongAnswer1, wrongAnswer2, wrongAnswer3],
-    //   Difficulty: difficulty
-    // };
-    // try {
-    //   addQuestion(payload).then((res) => console.log(res));
-    //   console.log(payload);
-    // }catch(err) {
-    //   throw new Error(err);
-    // }
+    event.preventDefault();
+    const payload = {
+      Description: description, 
+      Answers: trueAnswer, 
+      WrongAnswers: [wrongAnswer1, wrongAnswer2, wrongAnswer3],
+      Difficulty: difficulty
+    };
+    try {
+      addQuestion(payload).then((res) => {
+        console.log(res)
+        setAllert(true);
+      });
+      console.log(payload);
+    }catch(err) {
+      throw new Error(err);
+    }
     
   }
 
@@ -92,6 +97,11 @@ const AddQuestion = (props) => {
           justifyContent: "center",
           alignItems: "center"
       }}>
+          { allert?
+            <AlertDialog></AlertDialog>
+            :
+            <></>
+          }
           {/* <h2>ADD QUESTION</h2> */}
           <div style={{
             width: "90%",
