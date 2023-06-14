@@ -75,10 +75,13 @@ function Header() {
         link: "/profilePage",
       },
       {
+        name: "Trang admin",
+        link: "/adminPage",
+      },
+      {
         name: "Cài đặt",
         link: "/user/setting",
       },
-
       {
         name: "Đăng xuất",
         link: "/",
