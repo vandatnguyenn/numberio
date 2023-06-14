@@ -18,7 +18,7 @@
 
 .wrapper .left{
   width: 15%;
-  background: #4ABFFF;
+  background: #ffffff;
   padding: 30px 25px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -99,7 +99,7 @@
 .wrapper .right .gamehistories .gamecontainer .game-box .left-side{
   width: 75%;  
   padding: 10px;
-  background-color: #ffc299;
+  background-color: #eaeaea;
 }
 
 .wrapper .right .gamehistories .gamecontainer .game-box .left-side p{
@@ -111,12 +111,12 @@
   width: 25%;
   padding: 10px;
   vertical-align: middle;
-  background-color: #ffad99;  
+  background-color: #e5e1e1;  
   text-align: center;
 }
 
 .wrapper .right .gamehistories .gamecontainer .game-box .right-side p{
   font-weight: 500;
   font-size: larger;
-  color: #f9f5f4;
+  color: #000000;
 }
