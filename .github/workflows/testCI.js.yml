@@ -1,0 +1,78 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ "main" ]
+ 
+jobs:
+  build:
+
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./numberio-be
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: dir
+    - run: npm install
+    - run: npm run build --if-present
+    - run: npm test
+    
+    
+  merge-branch:
+    name: Create PR Release to Main
+    permissions: 
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+
+
+      # https://github.com/marketplace/actions/github-pull-request-action
+      - name: create pull request
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: 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
+          destination_branch: ${{ github.event.repository.default_branch }}
+          pr_title: "[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}"
+          pr_body: "Automated Pull Request"
+          pr_reviewer: "vandatnguyen"
+          pr_assignee: "letiendat200"
+
+      # https://github.com/marketplace/actions/enable-pull-request-automerge
+      - name: enable automerge
+        if: steps.open-pr.outputs.pr_number != ''
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: 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
+          pull-request-number: ${{ steps.open-pr.outputs.pr_number }}
+          merge-method: merge
+#   merge-branch:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@master
+
+#       - name: Merge staging -> main
+#         uses: devmasx/merge-branch@master
+#         with:
+#           type: now
+#           target_branch: main
+#           message: Merge staging into uat
+#           github_token: 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
