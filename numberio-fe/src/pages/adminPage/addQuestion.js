@@ -209,6 +209,9 @@ const AddQuestion = (props) => {
                   <Button className="cancelButton" variant="outlined" color="error" onClick={() => {navigate('/dashboard')}}>
                     Huỷ
                   </Button>
+                  <Button className="manageButton" variant="outlined" color="info" onClick={() => {navigate('/manageQuestion')}}>
+                    Quản lý câu hỏi
+                  </Button>
                 </div>
               </form>
           </div>

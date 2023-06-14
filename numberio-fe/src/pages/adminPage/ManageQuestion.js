@@ -4,7 +4,20 @@ import { Link } from 'react-router-dom';
 // import { getQuestions, deleteQuestion } from '../../api';
 
 const ManageQuestions = () => {
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState([
+    { id: 1, description: "Hãy tính giá trị của biểu thức: 4 x 5 - 3 x 2" },
+    { id: 2, description: "Tìm số hạng chưa biết trong phép tính: 7 x 8 = ? x 8" },
+    { id: 3, description: "Cho a = 12 và b = 5. Hãy tính giá trị của biểu thức: a + b - 2" },
+    { id: 4, description: "Số nào lớn hơn: 3/4 hay 5/8?" },
+    { id: 5, description: "Cho một tam giác vuông có độ dài cạnh góc vuông là 6 cm. Hãy tính chu vi của tam giác đó." },
+    { id: 6, description: "Tìm số hạng chưa biết trong phép tính: 15 ÷ ? = 3" },
+    { id: 7, description: "Tìm giá trị của x trong phương trình 2x + 5 = 15" },
+    { id: 8, description: "Hãy chuyển số 25/4 thành số thập phân" },
+    { id: 9, description: "Tìm giá trị của biểu thức: 3 x (4 + 2) - 5" },
+    { id: 10, description: "Hãy tính diện tích của hình chữ nhật có chiều dài là 8 cm và chiều rộng là 5 cm" },
+    { id: 11, description: "Tìm số hạng chưa biết trong phép tính: 64 ÷ ? = 8" },
+  ]);
+  
 
   useEffect(() => {
 
@@ -24,10 +37,10 @@ const ManageQuestions = () => {
 
   return (
     <Container>
-      <h1>Manage Questions</h1>
+      <h1>Quản lý câu hỏi</h1>
       <Stack spacing={2} direction="row" alignItems="center" mb={2}>
         <Button variant="contained" component={Link} to="/add-question">
-          Add Question
+          Thêm câu hỏi
         </Button>
       </Stack>
       <table>
