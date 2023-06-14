@@ -39,7 +39,7 @@ const ManageQuestions = () => {
     <Container>
       <h1>Quản lý câu hỏi</h1>
       <Stack spacing={2} direction="row" alignItems="center" mb={2}>
-        <Button variant="contained" component={Link} to="/add-question">
+        <Button variant="contained" component={Link} to="/adminPage">
           Thêm câu hỏi
         </Button>
       </Stack>
@@ -61,6 +61,7 @@ const ManageQuestions = () => {
                   variant="outlined"
                   color="primary"
                   onClick={() => handleEdit(question.id)}
+                  style={{ marginRight: '8px' }}
                 >
                   Edit
                 </Button>
@@ -68,6 +69,7 @@ const ManageQuestions = () => {
                   variant="outlined"
                   color="info"
                   onClick={() => handleViewStats(question.id)}
+                  style={{ marginRight: '8px' }}
                 >
                   View Stats
                 </Button>
@@ -75,6 +77,7 @@ const ManageQuestions = () => {
                   variant="outlined"
                   color="error"
                   onClick={() => handleDelete(question.id)}
+                  style={{ marginRight: '8px' }}
                 >
                   Delete
                 </Button>
