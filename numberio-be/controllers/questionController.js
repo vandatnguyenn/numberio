@@ -1,10 +1,16 @@
 const Questions = require('../models/questionModel');
 const questionService = require('../utils/gRPC/services/questionService');
+const setAsync = require('../middlewares/cache/redis').setAsync;
+
+
+
 exports.addQuestion = async (req, res, next) => {
   const newQuestion = req.body;
   const token = req.user.token;
   try {
     const result = await questionService.createQuestion(newQuestion, token);
+    const question = await Questions.find();
+    await setAsync('questions', JSON.stringify(question));
     return res.status(201).json(result);
   } catch (err) {
     return res.status(400).send();
@@ -17,6 +23,8 @@ exports.updateQuestion = async (req, res, next) => {
       req.body,
       req.user.token
     );
+    const question = await Questions.find();
+    await setAsync('questions', JSON.stringify(question));
     return res.status(200).json(result);
   } catch (err) {
     return res.status(400).send();
@@ -40,6 +48,8 @@ exports.getQuestions = async (req, res, next) => {
       req.user.token
     );
     console.log(result);
+    const question = await Questions.find();
+    await setAsync('questions', JSON.stringify(question));
     return res.status(200).json(result);
   } catch (err) {
     return res.status(400).send();
